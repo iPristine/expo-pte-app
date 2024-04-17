@@ -1,0 +1,1 @@
+export {HomeScreen as default} from "@/src/modules/home/ui/home/home.screen"
