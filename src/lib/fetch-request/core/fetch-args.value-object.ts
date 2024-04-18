@@ -6,7 +6,7 @@ import type { ResultTypeValueObject } from "./result-type.value-object"
 
 export type FetchArgsValueObject = {
   type?: MethodTypeValueObject
-  body?: BodyTypeValueObject
+  body?: BodyTypeValueObject | string
   headers?: HeadersTypeValueObject
   timeout?: number
   querySearchParams?: QuerySearchParamsValueObject

@@ -8,7 +8,6 @@ export const SignInScreen = observer(() => {
 
     const handleLogin = () => {
         authAction.handleLogin()
-        console.log('handleLogin', authStore.loginValidator.values)
     };
 
     return (

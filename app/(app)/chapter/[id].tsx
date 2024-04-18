@@ -1,0 +1,1 @@
+export {ChapterScreen as default} from "@/src/modules/chapter/ui/chapter/chapter.screen"

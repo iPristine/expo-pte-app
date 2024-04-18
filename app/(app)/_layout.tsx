@@ -2,9 +2,9 @@ import {useEffect} from "react";
 import { SplashScreen, Stack} from "expo-router";
 import {WelcomeScreen} from "@/src/modules/auth/ui/welcome/welcome.screen";
 import {useSession} from "@/src/modules/auth/ctx";
+import {Header} from "@/src/modules/app/ui/header";
 
 export default function AppLayout() {
-    console.log("AppLayout")
     const { token, isLoading } = useSession();
 
 
@@ -27,5 +27,10 @@ export default function AppLayout() {
     }
 
 
-    return <Stack />;
+    return <Stack
+        screenOptions={{
+            headerShown: true,
+            header: () => (<Header />)
+        }}
+    />;
 }

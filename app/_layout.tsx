@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { useColorScheme } from '@/components/useColorScheme';
 import {SessionProvider} from "@/src/modules/auth/ctx";
 import {observer} from "mobx-react-lite";
+import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-modal";
+import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,6 +57,8 @@ const RootLayoutNav = observer(() => {
       <PaperProvider>
         <SessionProvider>
           <Slot />
+            <SectionsModal />
+            <UserMenuModal />
         </SessionProvider>
       </PaperProvider>
     </ThemeProvider>

@@ -1,1 +1,1 @@
-export const BASE_API_ENDPOINT = "http://localhost"
+export const BASE_API_ENDPOINT = "https://sevquad.tech"

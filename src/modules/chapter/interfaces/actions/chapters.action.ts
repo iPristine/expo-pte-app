@@ -1,5 +1,6 @@
 import {ChaptersStore} from "@/src/modules/chapter/interfaces/stores/chapters.store";
 import {loadChaptersUseCase} from "@/src/modules/chapter/use-cases/load-chapters.use-case";
+import {loadChapterUseCase} from "@/src/modules/chapter/use-cases/load-chapter.use-case";
 
 export class ChaptersAction {
     private static instance: ChaptersAction
@@ -31,6 +32,22 @@ export class ChaptersAction {
         }
 
         this.chaptersStore.chapters.setIsLoading(false)
+    }
+
+    loadChapter = async (id: string) => {
+        this.chaptersStore.chapterDetails.setIsLoading(true)
+        const result = await loadChapterUseCase({id})
+
+        if (result.isErr()) {
+            this.chaptersStore.chapterDetails.setError(
+                result.getError().message
+            )
+        } else {
+            this.chaptersStore.chapterDetails.setData(result.getValue())
+            this.chaptersStore.chapterDetails.setError(undefined)
+        }
+
+        this.chaptersStore.chapterDetails.setIsLoading(false)
     }
 
 }

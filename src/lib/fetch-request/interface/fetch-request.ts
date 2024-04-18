@@ -2,7 +2,6 @@ import type { FetchArgsValueObject } from "../core/fetch-args.value-object"
 import { checkRawData } from "./handlers/check-raw-data"
 import { getHeaders } from "./handlers/get-headers"
 import { getQuerySearchParams } from "./handlers/get-query-search-params"
-import { getTimeoutControl } from "./handlers/get-timeout-control"
 
 export async function fetchRequest(
   url: string,
@@ -15,7 +14,6 @@ export async function fetchRequest(
   }
   const body = checkRawData(args.body) ? args.body : JSON.stringify(args.body)
 
-  const timeoutControl = getTimeoutControl(args.timeout)
 
   const [baseUrl, querySearchParamsUrl] = url.split("?")
   const searchParams = getQuerySearchParams({
@@ -23,19 +21,17 @@ export async function fetchRequest(
     params: args.querySearchParams,
     withCache: args.withCache,
   })
-  const fullUrl = `${baseUrl}${searchParams}`
-
+  const fullUrl = `${baseUrl}${querySearchParamsUrl?searchParams: ''}`
+  console.log(fullUrl, args.headers, body, type)
   const result = await fetch(fullUrl, {
     headers: getHeaders(args.headers),
     method: type,
-    body,
-    signal: timeoutControl.signal,
+    body: body
   }).catch((err) => {
-    console.error(err)
+    console.log(err)
     throw new Error("Failed to fetch")
   })
 
-  timeoutControl.stop()
 
   return result
 }

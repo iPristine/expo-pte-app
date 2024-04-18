@@ -14,6 +14,8 @@ export function RegisterScreen() {
         console.log('Email:', email);
         console.log('Full Name:', fullName);
         console.log('Password:', password);
+
+        fetch("https://sevquad.tech/token").then(console.log)
     };
 
     return (

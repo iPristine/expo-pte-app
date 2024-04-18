@@ -37,7 +37,6 @@ export class ApiClient {
         let response
 
         try {
-            console.log("fetching", url, args)
             response = await fetchRequest(url, { ...args, timeout: FETCH_TIMEOUT })
 
         } catch (e) {

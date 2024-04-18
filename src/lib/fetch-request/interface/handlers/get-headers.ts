@@ -5,11 +5,10 @@ export function getHeaders(
   headers: HeadersTypeValueObject = {}
 ): Record<string, string> {
   const extraHeaders = {
-    "X-Rosi-Auth": "guest",
     ...headers,
-    "Content-Type": Object.hasOwn(headers, "Content-Type")
-      ? headers["Content-Type"]
-      : "application/json",
+    // "Content-Type": Object.hasOwn(headers, "Content-Type")
+    //   ? headers["Content-Type"]
+    //   : "application/json",
   }
 
   return cleanUndefinedInHeaders(extraHeaders)

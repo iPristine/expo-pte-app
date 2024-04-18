@@ -14,8 +14,11 @@ export class ChaptersStore {
 
 
   chapters = new DataState<ChapterEntity[], string>({ isLoading: false })
-
+  chapterDetails = new DataState<ChapterEntity, string>({ isLoading: false })
   setChapters(chapters: ChapterEntity[]): void {
     this.chapters.setData(chapters)
+  }
+  setChapterDetails(chapter: ChapterEntity): void {
+    this.chapterDetails.setData(chapter)
   }
 }

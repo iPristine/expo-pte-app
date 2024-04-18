@@ -16,9 +16,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dmalykh.expopteapp"
     },
     "android": {
+      "networkSecurityConfig": "./network_security_config.xml",
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
