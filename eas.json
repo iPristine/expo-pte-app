@@ -12,6 +12,14 @@
     },
     "production": {}
   },
+  "builds": {
+    "android": {
+      "image": "default"
+    },
+    "ios": {
+      "image": "default"
+    }
+  },
   "submit": {
     "production": {}
   }
