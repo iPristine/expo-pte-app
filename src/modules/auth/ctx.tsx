@@ -25,13 +25,12 @@ export function useSession() {
 export const SessionProvider = observer((props: React.PropsWithChildren) => {
     const [isLoading, setIsLoading] = useState(true)
     const {authStore} = useAuthContext()
-    console.log('SessionProvider', authStore.token.data)
+
     useEffect( () => {
         const loadToken = async () => {
             setIsLoading(true)
             const token = await  AuthService.loadToken()
             if (token) {
-                console.log('loadToken', token)
                 authStore.token.setData(token)
             }
             setIsLoading(false)
@@ -49,7 +48,6 @@ export const SessionProvider = observer((props: React.PropsWithChildren) => {
         [authStore.token.data, isLoading, authStore.token.isLoading]
     )
 
-    console.log(contextValue, authStore.token.isLoading)
     return (
         <SessionContext.Provider
             value={contextValue}>

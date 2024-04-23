@@ -1,6 +1,7 @@
 import {ChaptersStore} from "@/src/modules/chapter/interfaces/stores/chapters.store";
 import {loadChaptersUseCase} from "@/src/modules/chapter/use-cases/load-chapters.use-case";
 import {loadChapterUseCase} from "@/src/modules/chapter/use-cases/load-chapter.use-case";
+import {loadChaptersBySearchUseCase} from "@/src/modules/chapter/use-cases/load-chapters-by-search.use-case";
 
 export class ChaptersAction {
     private static instance: ChaptersAction
@@ -18,7 +19,6 @@ export class ChaptersAction {
 
     loadChapters = async () => {
         this.chaptersStore.chapters.setIsLoading(true)
-        console.log('loadChapters')
         const result = await loadChaptersUseCase()
 
 
@@ -48,6 +48,25 @@ export class ChaptersAction {
         }
 
         this.chaptersStore.chapterDetails.setIsLoading(false)
+    }
+
+
+    searchChapters = async () => {
+
+        this.chaptersStore.chapters.setIsLoading(true)
+
+        const result = await loadChaptersBySearchUseCase(this.chaptersStore.searchValidator.values.searchQuery)
+
+        if (result.isErr()) {
+            this.chaptersStore.chapters.setError(
+                result.getError().message
+            )
+        } else {
+            this.chaptersStore.chapters.setData(result.getValue())
+            this.chaptersStore.chapters.setError(undefined)
+        }
+
+        this.chaptersStore.chapters.setIsLoading(false)
     }
 
 }

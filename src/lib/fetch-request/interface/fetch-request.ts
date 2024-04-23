@@ -22,13 +22,12 @@ export async function fetchRequest(
     withCache: args.withCache,
   })
   const fullUrl = `${baseUrl}${querySearchParamsUrl?searchParams: ''}`
-  console.log(fullUrl, args.headers, body, type)
   const result = await fetch(fullUrl, {
     headers: getHeaders(args.headers),
     method: type,
     body: body
   }).catch((err) => {
-    console.log(err)
+    console.error(err)
     throw new Error("Failed to fetch")
   })
 

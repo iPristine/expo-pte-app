@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import {observer} from "mobx-react-lite";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import {ChapterCard} from "@/src/modules/chapter/ui/chapter-card/chapter-card";
+import {useChapterContext} from "@/src/modules/chapter/use-chapter-context";
 
 export const HomeScreen =  observer(() => {
 
     const {sectionsStore, sectionsAction} = useSectionContext()
+    const {chaptersStore} = useChapterContext()
 
     useEffect(() => {
         sectionsAction.loadSections()
@@ -43,21 +45,29 @@ export const HomeScreen =  observer(() => {
         );
     }
 
+    if(chaptersStore.chapters.data?.length){
+        return (
+            <ScrollView style={styles.container}>
+    
+                {chaptersStore.chapters.data.map(chapter => (
+                    <ChapterCard key={chapter.id} chapter={chapter} />
+                ))}
+            </ScrollView>
+        );
+    }
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
 
             {sectionsStore.sectionDetails.data.chapters.map(chapter => (
                 <ChapterCard key={chapter.id} chapter={chapter} />
             ))}
-        </View>
+        </ScrollView>
     );
 })
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
     },
     text: {
         fontSize: 24,

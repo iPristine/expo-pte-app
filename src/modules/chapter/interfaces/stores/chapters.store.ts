@@ -1,4 +1,5 @@
 import {DataState} from "@/src/lib/di/interface/data-state";
+import { Validator } from "@/src/lib/validator";
 import {ChapterEntity} from "@/src/modules/chapter/infra/types/chapter.entity";
 
 export class ChaptersStore {
@@ -12,6 +13,9 @@ export class ChaptersStore {
     return ChaptersStore.instance
   }
 
+  searchValidator = new Validator({
+    searchQuery: Validator.scheme.string().min(3),
+  })
 
   chapters = new DataState<ChapterEntity[], string>({ isLoading: false })
   chapterDetails = new DataState<ChapterEntity, string>({ isLoading: false })
@@ -21,4 +25,5 @@ export class ChaptersStore {
   setChapterDetails(chapter: ChapterEntity): void {
     this.chapterDetails.setData(chapter)
   }
+
 }

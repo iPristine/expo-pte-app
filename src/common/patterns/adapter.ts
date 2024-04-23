@@ -1,10 +1,10 @@
 import {AuthStore} from "@/src/modules/auth/interfaces/stores/auth.store";
 
 export abstract class Adapter {
-    private authStore = AuthStore.getInstance()
+     authStore = AuthStore.getInstance()
 
 
-    public async getAuthHeaders(): Promise<Record<string, string>> {
+    public getAuthHeaders = async (): Promise<Record<string, string>> => {
         return {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${this.authStore.token.data}`

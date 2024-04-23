@@ -6,6 +6,7 @@ import {ChapterEntity} from "@/src/modules/chapter/infra/types/chapter.entity";
 import {UserEntity} from "@/src/modules/user/infra/types/user.entity";
 import {UserResponse} from "@/src/modules/user/infra/types/user.response";
 import {userResponseMapper} from "@/src/modules/user/infra/mappers/user-response.mapper";
+import {AuthStore} from "@/src/modules/auth/interfaces/stores/auth.store";
 
 export class UserAdapter extends Adapter {
     private apiClient = ApiClient.getInstance()

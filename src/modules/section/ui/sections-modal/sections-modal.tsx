@@ -14,7 +14,6 @@ export const SectionsModal = observer(()=>{
     const containerStyle = {backgroundColor: white, padding: 20};
 
        const handleOnSectionClick = (section: SectionEntity) => {
-           console.log(section.id)
            sectionsStore.sectionDetailsId.setData(section.id)
               sectionsStore.sectionsMenu.handleClose()
        }

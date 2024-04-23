@@ -7,6 +7,7 @@ import { ApiClientStore } from "../stores/api-client.store"
 import { getResult } from "../../infra/mappers/get-result"
 import { FetchInterceptor } from "./fetch-interceptor"
 import { RestApiClient } from "./rest-api-client"
+import {AuthStore} from "@/src/modules/auth/interfaces/stores/auth.store";
 
 const FETCH_TIMEOUT = 30000
 
@@ -57,8 +58,8 @@ export class ApiClient {
         url: string,
         args?: FetchArgsValueObject
     ): Promise<RequestResponse<T>> {
-        const token = ApiClientStore.getInstance().getToken()
 
+        const token = AuthStore.getInstance().token.data
         let response
 
         try {

@@ -41,4 +41,21 @@ export class ChapterAdapter extends Adapter {
         return Ok(result)
     }
 
+    async searchChapters(search: string): Promise<Result<ChapterEntity[], Error>> {
+        const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity[]>(
+            `${BASE_API_ENDPOINT}/search?query=${search}`,
+            {
+                headers: { ...(await this.getAuthHeaders()) },
+            }
+        )
+
+        if (!ok || !json) {
+            return Err(new Error(`Chapters loading failed ${status}`))
+        }
+
+        const result = json
+
+        return Ok(result)
+    }
+
 }

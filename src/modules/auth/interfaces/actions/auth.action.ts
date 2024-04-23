@@ -28,7 +28,6 @@ export class AuthAction {
 
         const { username, password } = result.values
         const tokenResult = await loginUseCase({ username, password })
-        console.log(tokenResult)
         if (tokenResult.isErr()) {
             this.authStore.token.setError(tokenResult.getError().message)
         } else {

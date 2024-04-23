@@ -6,11 +6,12 @@ import { white } from "@/src/style/colors";
 import { Menu } from 'react-native-paper';
 import {useUserContext} from "@/src/modules/user/use-user-context";
 import {useAuthContext} from "@/src/modules/auth/use-auth-context";
+import {router} from "expo-router";
 
 
 
 export const UserMenuModal = observer(()=>{
-        const { userStore} =useUserContext()
+        const { userStore, userAction} =useUserContext()
     const {authAction} = useAuthContext()
     const containerStyle = {backgroundColor: white, padding: 20};
 
@@ -20,7 +21,13 @@ export const UserMenuModal = observer(()=>{
        }
 
        const handleProfileClick = () => {
-           console.log("NAVIGATE TO PROFILE")
+           router.push("/profile")
+           userStore.userMenuModal.handleClose()
+       }
+
+       const handleSignOutClick = () => {
+           userStore.userMenuModal.handleClose()
+             authAction.handleSignOut()
        }
 
     return (
@@ -41,7 +48,7 @@ export const UserMenuModal = observer(()=>{
                     />
 
                     <Menu.Item
-                        onPress={authAction.handleSignOut}
+                        onPress={handleSignOutClick}
                         title={'Выйти'}
                     />
 

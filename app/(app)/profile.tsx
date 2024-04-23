@@ -1,0 +1,1 @@
+export {ProfileScreen as default} from "@/src/modules/user/ui/profile/profile.screen"
