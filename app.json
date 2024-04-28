@@ -21,7 +21,6 @@
     },
     "android": {
       "networkSecurityConfig": "./network_security_config.xml",
-
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -47,6 +46,7 @@
       "eas": {
         "projectId": "e608dfe7-78bf-4a12-8bb7-1a0d0931e4e9"
       }
-    }
+    },
+    "owner": "dmalykh"
   }
 }
