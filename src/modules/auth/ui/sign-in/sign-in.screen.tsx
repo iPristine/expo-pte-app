@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import {useAuthContext} from "@/src/modules/auth/use-auth-context";
 import {observer} from "mobx-react-lite";
+import {router} from "expo-router";
 
 export const SignInScreen = observer(() => {
     const { authAction, authStore  } = useAuthContext()
@@ -9,6 +10,11 @@ export const SignInScreen = observer(() => {
     const handleLogin = () => {
         authAction.handleLogin()
     };
+
+    const handleBack = () => {
+        router.replace('/')
+
+    }
 
     return (
         <View style={styles.container}>
@@ -28,6 +34,7 @@ export const SignInScreen = observer(() => {
                 onChangeText={authStore.loginValidator.handlers.password}
             />
             <Button title="Войти" onPress={handleLogin} />
+            <Button title="Назад" onPress={handleBack} />
         </View>
     );
 })

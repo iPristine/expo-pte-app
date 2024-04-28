@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import {ChapterCard} from "@/src/modules/chapter/ui/chapter-card/chapter-card";
 import {useChapterContext} from "@/src/modules/chapter/use-chapter-context";
+import {SearchEntityCard} from "@/src/modules/chapter/ui/search-entity-card/search-entity-card";
 
 export const HomeScreen =  observer(() => {
 
@@ -20,7 +21,7 @@ export const HomeScreen =  observer(() => {
         }
     }, [sectionsStore.sectionDetailsId.data]);
 
-    if (sectionsStore.sectionDetails.isLoading) {
+    if (sectionsStore.sectionDetails.isLoading || chaptersStore.searchEntities.isLoading) {
         return (
             <View style={styles.container}>
                 <Text>Loading...</Text>
@@ -45,12 +46,12 @@ export const HomeScreen =  observer(() => {
         );
     }
 
-    if(chaptersStore.chapters.data?.length){
+    if(chaptersStore.searchValidator.values.searchQuery?.length > 2 && chaptersStore.searchEntities.data){
         return (
             <ScrollView style={styles.container}>
     
-                {chaptersStore.chapters.data.map(chapter => (
-                    <ChapterCard key={chapter.id} chapter={chapter} />
+                {chaptersStore.searchEntities.data.map(searchEntity => (
+                    <SearchEntityCard key={searchEntity.id}  searchEntity={searchEntity} />
                 ))}
             </ScrollView>
         );

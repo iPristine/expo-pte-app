@@ -1,55 +1,60 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
+import {observer} from "mobx-react-lite";
+import {router} from "expo-router";
+import {useAuthContext} from "@/src/modules/auth/use-auth-context";
 
-export function RegisterScreen() {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [password, setPassword] = useState('');
+export const RegisterScreen =  observer(() => {
+    const {authAction, authStore} = useAuthContext()
 
     const handleRegister = () => {
-        // Здесь можно выполнить логику регистрации, например, отправить данные на сервер для создания нового пользователя
-
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Full Name:', fullName);
-        console.log('Password:', password);
-
-        fetch("https://sevquad.tech/token").then(console.log)
+        authAction.handleRegister()
     };
+
+    const handleBack = () => {
+        router.replace('/')
+    }
 
     return (
         <View style={styles.container}>
             <TextInput
+                autoCorrect={false}
+                autoCapitalize="none"
                 style={styles.input}
                 placeholder="Логин"
-                value={username}
-                onChangeText={setUsername}
+                value={authStore.registerValidator.values.username}
+                onChangeText={authStore.registerValidator.handlers.username}
             />
             <TextInput
+                autoCorrect={false}
+                autoCapitalize="none"
                 style={styles.input}
                 placeholder="Email"
                 keyboardType="email-address"
-                value={email}
-                onChangeText={setEmail}
+                value={authStore.registerValidator.values.email}
+                onChangeText={authStore.registerValidator.handlers.email}
             />
             <TextInput
+                autoCorrect={false}
                 style={styles.input}
                 placeholder="Полное имя"
-                value={fullName}
-                onChangeText={setFullName}
+                value={authStore.registerValidator.values.fullName}
+                onChangeText={authStore.registerValidator.handlers.fullName}
             />
             <TextInput
+                autoCorrect={false}
+                autoCapitalize="none"
                 style={styles.input}
                 placeholder="Пароль"
                 secureTextEntry={true}
-                value={password}
-                onChangeText={setPassword}
+                value={authStore.registerValidator.values.password}
+                onChangeText={authStore.registerValidator.handlers.password}
             />
             <Button title="Зарегистрироваться" onPress={handleRegister} />
+            <Button title="Назад" onPress={handleBack} />
         </View>
     );
-}
+})
 
 const styles = StyleSheet.create({
     container: {

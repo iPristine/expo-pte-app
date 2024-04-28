@@ -53,20 +53,20 @@ export class ChaptersAction {
 
     searchChapters = async () => {
 
-        this.chaptersStore.chapters.setIsLoading(true)
+        this.chaptersStore.searchEntities.setIsLoading(true)
 
         const result = await loadChaptersBySearchUseCase(this.chaptersStore.searchValidator.values.searchQuery)
 
         if (result.isErr()) {
-            this.chaptersStore.chapters.setError(
+            this.chaptersStore.searchEntities.setError(
                 result.getError().message
             )
         } else {
-            this.chaptersStore.chapters.setData(result.getValue())
-            this.chaptersStore.chapters.setError(undefined)
+            this.chaptersStore.searchEntities.setData(result.getValue())
+            this.chaptersStore.searchEntities.setError(undefined)
         }
 
-        this.chaptersStore.chapters.setIsLoading(false)
+        this.chaptersStore.searchEntities.setIsLoading(false)
     }
 
 }

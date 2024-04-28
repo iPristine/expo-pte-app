@@ -1,6 +1,5 @@
 import {observer} from "mobx-react-lite";
 import {Portal, Modal} from "react-native-paper";
-import {StyleSheet} from "react-native";
 import { Text } from '@/components/Themed';
 import { white } from "@/src/style/colors";
 import { Menu } from 'react-native-paper';
@@ -11,13 +10,13 @@ import {router} from "expo-router";
 
 
 export const UserMenuModal = observer(()=>{
-        const { userStore, userAction} =useUserContext()
+        const { userStore} =useUserContext()
     const {authAction} = useAuthContext()
     const containerStyle = {backgroundColor: white, padding: 20};
 
        const handleFavoratesClick = () => {
-           console.log("NAVIGATE TO PROFILE")
-
+           router.push("/favorates")
+           userStore.userMenuModal.handleClose()
        }
 
        const handleProfileClick = () => {

@@ -1,7 +1,7 @@
-import {loadChaptersUseCase} from "@/src/modules/chapter/use-cases/load-chapters.use-case";
 import {UserStore} from "@/src/modules/user/interfaces/stores/user.store";
 import {loadUserUseCase} from "@/src/modules/user/use-cases/load-user.use-case";
 import {loadFavoratesUseCase} from "@/src/modules/user/use-cases/load-favorates.use-case";
+import {addToFavoratesUseCase} from "@/src/modules/user/use-cases/add-to-favorates.use-case";
 
 export class UserAction {
     private static instance: UserAction
@@ -51,7 +51,7 @@ export class UserAction {
     }
 
     addToFavorates = async (chapterId: string) => {
-        const result = await loadChaptersUseCase()
+        const result = await addToFavoratesUseCase({chapterId})
 
         if (result.isErr()) {
             this.userStore.favorates.setError(

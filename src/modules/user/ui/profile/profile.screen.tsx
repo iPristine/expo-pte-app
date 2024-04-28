@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {observer} from "mobx-react-lite";
-import {Avatar, Badge, Button, Card, Icon, Text} from 'react-native-paper';
+import { Badge, Button, Card, Icon, Text} from 'react-native-paper';
 
 import {useUserContext} from "@/src/modules/user/use-user-context";
-import {gray} from "colorette";
+import {router} from "expo-router";
 
 export const ProfileScreen = observer(() => {
 
@@ -15,7 +15,7 @@ export const ProfileScreen = observer(() => {
     }, []);
 
     const handleOpenFavorates = () => {
-        console.log("handleOpenFavorates")
+        router.push("/favorates")
     }
 
 

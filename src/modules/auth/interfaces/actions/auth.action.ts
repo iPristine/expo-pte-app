@@ -1,10 +1,10 @@
 import { router } from "expo-router"
 import { loginUseCase } from "@/src/modules/auth/use-cases/login/login.use-case"
-import { ApiClientAction } from "@/src/modules/api/interface/actions/api-client.action"
 import { SecureStore } from "@/src/lib/secure-store"
 import { SECURE_STORAGE_KEYS } from "@/src/constants"
 import { AuthStore } from "../stores/auth.store"
 import {AuthService} from "@/src/modules/auth/interfaces/services/auth.service";
+import {registerUseCase} from "@/src/modules/auth/use-cases/register/register.use-case";
 
 export class AuthAction {
     private static instance: AuthAction
@@ -48,7 +48,7 @@ export class AuthAction {
         AuthService.clearToken()
     }
 
-    handleRegister = () =>{
+    handleRegister = async () =>{
         const result = this.authStore.registerValidator.submit()
         if (!result.isValid) {
             console.log('register fields are invalid')
@@ -56,6 +56,10 @@ export class AuthAction {
         }
 
         const { username, password, email, fullName } = result.values
+        const registerResult = await registerUseCase({ username, password, email, fullName })
+        if(!registerResult.isErr()){
+            router.push('/')
+        }
     }
 
     async deviceToken() {

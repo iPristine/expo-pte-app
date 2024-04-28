@@ -3,6 +3,7 @@ import { ApiClient } from "@/src/modules/api/interface/services/api-client"
 import { Adapter } from "@/src/common/patterns/adapter"
 import {BASE_API_ENDPOINT} from "@/config"
 import {ChapterEntity} from "@/src/modules/chapter/infra/types/chapter.entity";
+import {SearchEntity} from "@/src/modules/chapter/infra/types/search.entity";
 
 export class ChapterAdapter extends Adapter {
     private apiClient = ApiClient.getInstance()
@@ -41,8 +42,8 @@ export class ChapterAdapter extends Adapter {
         return Ok(result)
     }
 
-    async searchChapters(search: string): Promise<Result<ChapterEntity[], Error>> {
-        const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity[]>(
+    async searchChapters(search: string): Promise<Result<SearchEntity[], Error>> {
+        const { ok, json, status } = await this.apiClient.secured.get<SearchEntity[]>(
             `${BASE_API_ENDPOINT}/search?query=${search}`,
             {
                 headers: { ...(await this.getAuthHeaders()) },

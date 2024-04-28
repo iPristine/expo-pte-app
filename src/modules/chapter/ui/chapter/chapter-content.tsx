@@ -12,7 +12,6 @@ export const ChapterContent = ({chapterContent}: Props) => {
     if (!chapterContent) return
 
     if (typeof chapterContent === "string"){
-        // console.log("chapterContent", chapterContent)
         return <>{chapterContent}</>}
 
     if (!chapterContent.content.length) return ""
@@ -71,7 +70,6 @@ export const ChapterContent = ({chapterContent}: Props) => {
     </List.Section>)
 
     if (chapterContent.tagName === "li"){
-        // console.log(chapterContent)
         return (
         <List.Item
             left={()=><Icon size={24} source="circle-small" />}

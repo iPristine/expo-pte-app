@@ -1,5 +1,4 @@
 import { usePathname, useRouter } from "expo-router"
-import { useState } from "react"
 import {
   Dimensions,
   SafeAreaView,
@@ -23,7 +22,6 @@ export const Header = observer(() => {
   const {userStore} = useUserContext()
   const {chaptersAction, chaptersStore} = useChapterContext()
 
-  const [serach, setSearch] = useState("")
 
   const isHome = pathname === "/"
 
@@ -53,7 +51,7 @@ export const Header = observer(() => {
 
           {isHome && <Searchbar 
                 placeholder="Search"
-                style={{width: 200}} 
+                style={{width: 200}}
                 value={chaptersStore.searchValidator.values.searchQuery} 
                 onChangeText={chaptersStore.searchValidator.handlers.searchQuery} 
                 onIconPress={chaptersAction.searchChapters}
@@ -81,7 +79,7 @@ const layoutStyles = StyleSheet.create({
     backgroundColor: white,
     height: isAndroid
       ? Dimensions.get("window").height / 18
-      : Dimensions.get("window").height / 10,
+      : Dimensions.get("window").height / 6,
   },
   headerBox: {
     paddingHorizontal: 20,

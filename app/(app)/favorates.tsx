@@ -1,0 +1,1 @@
+export {FavoratesScreen as default} from "@/src/modules/user/ui/favorates/favorates.screen"

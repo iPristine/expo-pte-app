@@ -29,4 +29,29 @@ export class AuthAdapter extends Adapter {
     return Ok(result)
   }
 
+  async register(
+    username: string,
+    password: string,
+    email: string,
+    fullName: string
+  ): Promise<Result<LoginEntity, Error>> {
+    const { ok, json, status } = await this.apiClient.basic.post<LoginResponse>(
+      `${BASE_API_ENDPOINT}/register`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {username, password, email, full_name: fullName}
+      }
+    )
+    if (!ok || !json) {
+      return Err(new Error(`Register failed ${status}`))
+    }
+
+    const result = mapToAuthData(json)
+
+    return Ok(result)
+  }
+
+
 }
