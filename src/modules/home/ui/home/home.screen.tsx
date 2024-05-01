@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import {Text, useTheme} from 'react-native-paper';
 import {observer} from "mobx-react-lite";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import {ChapterCard} from "@/src/modules/chapter/ui/chapter-card/chapter-card";
@@ -7,9 +8,9 @@ import {useChapterContext} from "@/src/modules/chapter/use-chapter-context";
 import {SearchEntityCard} from "@/src/modules/chapter/ui/search-entity-card/search-entity-card";
 
 export const HomeScreen =  observer(() => {
-
     const {sectionsStore, sectionsAction} = useSectionContext()
     const {chaptersStore} = useChapterContext()
+    const {colors: {background}} = useTheme()
 
     useEffect(() => {
         sectionsAction.loadSections()
@@ -23,7 +24,7 @@ export const HomeScreen =  observer(() => {
 
     if (sectionsStore.sectionDetails.isLoading || chaptersStore.searchEntities.isLoading) {
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>Loading...</Text>
             </View>
         );
@@ -31,7 +32,7 @@ export const HomeScreen =  observer(() => {
 
     if(sectionsStore.sectionDetails.isError){
         return (
-            <View style={styles.container}>
+            <View>
                 <Text onPress={sectionsAction.loadSections}>Try again</Text>
                 <Text>Error: {sectionsStore.sections.error}</Text>
             </View>
@@ -40,7 +41,7 @@ export const HomeScreen =  observer(() => {
 
     if(!sectionsStore.sectionDetails.data?.chapters.length){
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>No chapters</Text>
             </View>
         );
@@ -48,8 +49,7 @@ export const HomeScreen =  observer(() => {
 
     if(chaptersStore.searchValidator.values.searchQuery?.length > 2 && chaptersStore.searchEntities.data){
         return (
-            <ScrollView style={styles.container}>
-    
+            <ScrollView style={{backgroundColor: background}}>
                 {chaptersStore.searchEntities.data.map(searchEntity => (
                     <SearchEntityCard key={searchEntity.id}  searchEntity={searchEntity} />
                 ))}
@@ -58,7 +58,7 @@ export const HomeScreen =  observer(() => {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={{backgroundColor: background}}>
 
             {sectionsStore.sectionDetails.data.chapters.map(chapter => (
                 <ChapterCard key={chapter.id} chapter={chapter} />
@@ -68,8 +68,6 @@ export const HomeScreen =  observer(() => {
 })
 
 const styles = StyleSheet.create({
-    container: {
-    },
     text: {
         fontSize: 24,
         fontWeight: 'bold',

@@ -61,4 +61,23 @@ export class UserAdapter extends Adapter {
         return Ok(result)
     }
 
+    async removeFromFavorates(chapterId: string): Promise<Result<ChapterEntity[], Error>> {
+        const { ok, json, status } = await this.apiClient.secured.delete<ChapterEntity[]>(
+            `${BASE_API_ENDPOINT}/users/favorates/${chapterId}`,
+            {
+                headers: { ...(await this.getAuthHeaders()) },
+                body: { chapterId }
+
+            }
+        )
+
+        if (!ok || !json) {
+            return Err(new Error(`Favorates removing failed ${status}`))
+        }
+
+        const result = json
+
+        return Ok(result)
+    }
+
 }

@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Portal, Modal} from "react-native-paper";
+import {Portal, Modal, useTheme} from "react-native-paper";
 import {StyleSheet} from "react-native";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import { Text } from '@/components/Themed';
@@ -11,7 +11,8 @@ import {SectionEntity} from "@/src/modules/section/infra/types/section.entity";
 
 export const SectionsModal = observer(()=>{
         const {sectionsStore} =useSectionContext()
-    const containerStyle = {backgroundColor: white, padding: 20};
+    const {colors: {background}} = useTheme()
+    const containerStyle = {backgroundColor: background, padding: 20};
 
        const handleOnSectionClick = (section: SectionEntity) => {
            sectionsStore.sectionDetailsId.setData(section.id)

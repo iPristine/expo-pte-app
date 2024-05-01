@@ -1,6 +1,6 @@
 import {ChapterContentEntity} from "@/src/modules/chapter/infra/types/chapter-content.entity";
-import {View, Text} from "react-native";
-import {Icon, List, DataTable } from 'react-native-paper';
+import {View} from "react-native";
+import {Icon, List, DataTable, Text } from 'react-native-paper';
 
 
 

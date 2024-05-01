@@ -9,11 +9,11 @@ import {
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { isAndroid } from "../platform"
-import {white} from "@/src/style/colors";
-import {Icon, Searchbar} from "react-native-paper";
+import {Icon, Searchbar, useTheme} from "react-native-paper";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import {useUserContext} from "@/src/modules/user/use-user-context";
 import { useChapterContext } from "../../chapter/use-chapter-context";
+
 
 export const Header = observer(() => {
   const pathname = usePathname()
@@ -21,6 +21,9 @@ export const Header = observer(() => {
   const {sectionsStore} = useSectionContext()
   const {userStore} = useUserContext()
   const {chaptersAction, chaptersStore} = useChapterContext()
+  const {colors: {
+    background
+  }} = useTheme()
 
 
   const isHome = pathname === "/"
@@ -30,11 +33,11 @@ export const Header = observer(() => {
   }
 
   return (
-    <View style={{ backgroundColor: "white" }}>
+    <View style={{ backgroundColor: background }}>
       {isAndroid && (
-        <StatusBar animated barStyle="dark-content" backgroundColor={white} />
+        <StatusBar animated barStyle="dark-content" backgroundColor={background} />
       )}
-      <SafeAreaView style={layoutStyles.moreHeaderContainer}>
+      <SafeAreaView style={[layoutStyles.moreHeaderContainer, {backgroundColor: background}]}>
         <View style={layoutStyles.headerBox}>
           <View style={layoutStyles.iconBox}>
             {isHome ? (
@@ -76,9 +79,8 @@ const layoutStyles = StyleSheet.create({
   moreHeaderContainer: {
     justifyContent: "center",
     marginTop: isAndroid ? 24 : 0,
-    backgroundColor: white,
     height: isAndroid
-      ? Dimensions.get("window").height / 18
+      ? Dimensions.get("window").height / 10
       : Dimensions.get("window").height / 6,
   },
   headerBox: {
@@ -98,8 +100,5 @@ const layoutStyles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 15,
-  },
-  headerText: {
-
   },
 })

@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Portal, Modal} from "react-native-paper";
+import {Portal, Modal, useTheme} from "react-native-paper";
 import { Text } from '@/components/Themed';
 import { white } from "@/src/style/colors";
 import { Menu } from 'react-native-paper';
@@ -12,7 +12,8 @@ import {router} from "expo-router";
 export const UserMenuModal = observer(()=>{
         const { userStore} =useUserContext()
     const {authAction} = useAuthContext()
-    const containerStyle = {backgroundColor: white, padding: 20};
+    const { colors: {background}} = useTheme()
+    const containerStyle = {backgroundColor: background, padding: 20};
 
        const handleFavoratesClick = () => {
            router.push("/favorates")

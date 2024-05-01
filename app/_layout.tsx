@@ -1,6 +1,4 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DefaultTheme, ThemeProvider} from '@react-navigation/native';
-import {PaperProvider} from 'react-native-paper';
 import {useFonts} from 'expo-font';
 import {Slot} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -9,35 +7,30 @@ import {SessionProvider} from "@/src/modules/auth/ctx";
 import {observer} from "mobx-react-lite";
 import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-modal";
 import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
+import {useColorScheme} from "react-native";
+import { MD3LightTheme, MD3DarkTheme, PaperProvider } from 'react-native-paper';
 
-export {
-    // Catch any errors thrown by the Layout component.
-    ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-    // Ensure that reloading on `/modal` keeps a back button present.
-    initialRouteName: '(tabs)',
-};
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
 
-const RootLayout = observer(() => {
+
+export default observer( function RootLayout () {
     const [isFontsLoaded, error] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
     });
 
-    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-    useEffect(() => {
-        if (error) throw error;
-    }, [error]);
 
     useEffect(() => {
-        if (isFontsLoaded) {
-            SplashScreen.hideAsync();
+        async function handleSplashScreen() {
+            if (isFontsLoaded) {
+                await SplashScreen.preventAutoHideAsync()
+            } else {
+                await SplashScreen.hideAsync()
+            }
         }
+
+        handleSplashScreen()
     }, [isFontsLoaded]);
 
     if (!isFontsLoaded) {
@@ -47,20 +40,22 @@ const RootLayout = observer(() => {
     return <RootLayoutNav/>;
 })
 
-const RootLayoutNav = observer(() => {
-    // const colorScheme = useColorScheme();
+const RootLayoutNav = () => {
+    const colorScheme = useColorScheme();
+
+    const paperTheme =
+        colorScheme === 'dark'
+            ? MD3DarkTheme
+            : MD3LightTheme ;
 
     return (
-        <ThemeProvider value={DefaultTheme}>
-            <PaperProvider>
-                <SessionProvider>
+            <PaperProvider theme={paperTheme}>
+                <SessionProvider >
                     <Slot/>
                     <SectionsModal/>
                     <UserMenuModal/>
                 </SessionProvider>
             </PaperProvider>
-        </ThemeProvider>
     );
-})
+}
 
-export default RootLayout;

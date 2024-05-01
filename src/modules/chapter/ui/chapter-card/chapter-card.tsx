@@ -23,12 +23,22 @@ export const ChapterCard = observer(({chapter, isFavorate}:Props) => {
         userAction.addToFavorates(chapter.id)
     }
 
+    const handleRemoveFromFavorate = () => {
+        userAction.removeFromFavorates(chapter.id)
+    }
+
+    const handleStartClick = () => {
+        isFavorate ? handleRemoveFromFavorate() : handleAddToFavorate()
+    }
+
+    const starIconName = isFavorate ? "star" : "star-outline"
+
     return (
         <Card.Title
             onTouchStart={handleClick}
             title={chapter.name}
             left={(props) => <TouchableOpacity onPress={handleClick}><Avatar.Icon {...props} icon="book-arrow-right-outline" /></TouchableOpacity>}
-            right={(props) => <TouchableOpacity onPress={handleAddToFavorate}><Avatar.Icon {...props} icon={isFavorate ? "star" : "star-outline"} /></TouchableOpacity>}
+            right={(props) => <TouchableOpacity onPress={handleStartClick}><Avatar.Icon {...props} icon={starIconName} /></TouchableOpacity>}
         />
     )
 })

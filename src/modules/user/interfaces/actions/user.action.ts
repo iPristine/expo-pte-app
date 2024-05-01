@@ -2,6 +2,7 @@ import {UserStore} from "@/src/modules/user/interfaces/stores/user.store";
 import {loadUserUseCase} from "@/src/modules/user/use-cases/load-user.use-case";
 import {loadFavoratesUseCase} from "@/src/modules/user/use-cases/load-favorates.use-case";
 import {addToFavoratesUseCase} from "@/src/modules/user/use-cases/add-to-favorates.use-case";
+import {removeFromFavoratesUseCase} from "@/src/modules/user/use-cases/remove-from-favorates.use-case";
 
 export class UserAction {
     private static instance: UserAction
@@ -59,14 +60,22 @@ export class UserAction {
             )
         } else {
             const chapters = result.getValue()
-            const chapter = chapters.find(chapter => chapter.id === chapterId)
 
-            if (!chapter) {
-                throw new Error('Chapter not found')
-            }
+            this.userStore.setFavorates(chapters)
+        }
+    }
 
-            const favorates = this.userStore.favorates.data
-            this.userStore.setFavorates([...favorates || [], chapter])
+    removeFromFavorates = async (chapterId: string) => {
+        const result = await removeFromFavoratesUseCase({chapterId})
+
+        if (result.isErr()) {
+            this.userStore.favorates.setError(
+                result.getError().message
+            )
+        } else {
+            const chapters = result.getValue()
+
+            this.userStore.setFavorates(chapters)
         }
     }
 }
