@@ -4,18 +4,19 @@ import {Slot} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import {SessionProvider} from "@/src/modules/auth/ctx";
-import {observer} from "mobx-react-lite";
 import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-modal";
 import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
 import {useColorScheme} from "react-native";
 import { MD3LightTheme, MD3DarkTheme, PaperProvider } from 'react-native-paper';
 
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+export {
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary,
+} from 'expo-router';
 
-
-export default observer( function RootLayout () {
-    const [isFontsLoaded, error] = useFonts({
+export default function RootLayout () {
+    const [isFontsLoaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
     });
@@ -38,7 +39,7 @@ export default observer( function RootLayout () {
     }
 
     return <RootLayoutNav/>;
-})
+}
 
 const RootLayoutNav = () => {
     const colorScheme = useColorScheme();
