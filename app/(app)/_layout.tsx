@@ -1,6 +1,5 @@
 import {useEffect} from "react";
-import { SplashScreen, Stack} from "expo-router";
-import {WelcomeScreen} from "@/src/modules/auth/ui/welcome/welcome.screen";
+import {Redirect, SplashScreen, Stack} from "expo-router";
 import {useSession} from "@/src/modules/auth/ctx";
 import {Header} from "@/src/modules/app/ui/header";
 
@@ -23,7 +22,7 @@ export default function AppLayout() {
     if (!token) {
         // On web, static rendering will stop here as the user is not authenticated
         // in the headless Node process that the pages are rendered in.
-        return <WelcomeScreen />;
+        return <Redirect href={"/(auth)/authentication/welcome"} />;
     }
 
 
@@ -32,5 +31,10 @@ export default function AppLayout() {
             headerShown: true,
             header: () => (<Header />)
         }}
-    />;
+    >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="favorates" />
+        <Stack.Screen name="profile" />
+        <Stack.Screen name="chapter" />
+    </Stack>;
 }

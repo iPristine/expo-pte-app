@@ -3,7 +3,6 @@ export const SECURE_STORAGE_KEYS = {
     authData: "authData",
     user: "user",
     deviceToken: "deviceToken",
-    isOnboardingFinished: "isOnboardingFinished",
     sessionId: "sessionId",
     token: "token"
 }

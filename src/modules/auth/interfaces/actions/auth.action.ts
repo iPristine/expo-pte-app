@@ -17,7 +17,8 @@ export class AuthAction {
         return AuthAction.instance
     }
 
-    async handleLogin(): Promise<void> {
+     handleLogin = async (): Promise<void> => {
+        console.log("handleLogin")
         this.authStore.token.setError(undefined)
         const result = this.authStore.loginValidator.submit()
         if (!result.isValid) {

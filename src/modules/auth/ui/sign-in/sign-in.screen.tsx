@@ -13,7 +13,6 @@ export const SignInScreen = observer(() => {
 
     const handleBack = () => {
         router.replace('/')
-
     }
 
     return (
