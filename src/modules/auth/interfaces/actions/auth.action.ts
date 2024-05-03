@@ -20,14 +20,15 @@ export class AuthAction {
      handleLogin = async (): Promise<void> => {
         console.log("handleLogin")
         this.authStore.token.setError(undefined)
-        const result = this.authStore.loginValidator.submit()
-        if (!result.isValid) {
+        const username = this.authStore.username.data
+         const password = this.authStore.password.data
+        if (!username || !password) {
             return
         }
 
         this.authStore.token.setIsLoading(true)
 
-        const { username, password } = result.values
+
         const tokenResult = await loginUseCase({ username, password })
         if (tokenResult.isErr()) {
             this.authStore.token.setError(tokenResult.getError().message)
@@ -37,7 +38,8 @@ export class AuthAction {
             this.authStore.token.setData(currentToken.accessToken)
             await AuthService.saveToken(currentToken.accessToken)
 
-            this.authStore.loginValidator.reset()
+            this.authStore.username.setData("")
+            this.authStore.password.setData("")
             router.replace('/')
         }
 
@@ -50,13 +52,16 @@ export class AuthAction {
     }
 
     handleRegister = async () =>{
-        const result = this.authStore.registerValidator.submit()
-        if (!result.isValid) {
+        const username = this.authStore.username.data
+        const password = this.authStore.password.data
+        const email = this.authStore.email.data
+        const fullName = this.authStore.fullName.data
+
+        if (!username || !password || !email || !fullName) {
             console.log('register fields are invalid')
             return
         }
 
-        const { username, password, email, fullName } = result.values
         const registerResult = await registerUseCase({ username, password, email, fullName })
         if(!registerResult.isErr()){
             router.push('/')

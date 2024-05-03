@@ -22,8 +22,8 @@ export const RegisterScreen =  observer(() => {
                 autoCapitalize="none"
                 style={styles.input}
                 placeholder="Логин"
-                value={authStore.registerValidator.values.username}
-                onChangeText={authStore.registerValidator.handlers.username}
+                value={authStore.username.data || ""}
+                onChangeText={authStore.username.setData}
             />
             <TextInput
                 autoCorrect={false}
@@ -31,15 +31,15 @@ export const RegisterScreen =  observer(() => {
                 style={styles.input}
                 placeholder="Email"
                 keyboardType="email-address"
-                value={authStore.registerValidator.values.email}
-                onChangeText={authStore.registerValidator.handlers.email}
+                value={authStore.email.data || ""}
+                onChangeText={authStore.email.setData}
             />
             <TextInput
                 autoCorrect={false}
                 style={styles.input}
                 placeholder="Полное имя"
-                value={authStore.registerValidator.values.fullName}
-                onChangeText={authStore.registerValidator.handlers.fullName}
+                value={authStore.fullName.data || ""}
+                onChangeText={authStore.fullName.setData}
             />
             <TextInput
                 autoCorrect={false}
@@ -47,8 +47,8 @@ export const RegisterScreen =  observer(() => {
                 style={styles.input}
                 placeholder="Пароль"
                 secureTextEntry={true}
-                value={authStore.registerValidator.values.password}
-                onChangeText={authStore.registerValidator.handlers.password}
+                value={authStore.password.data || ""}
+                onChangeText={authStore.password.setData}
             />
             <Button title="Зарегистрироваться" onPress={handleRegister} />
             <Button title="Назад" onPress={handleBack} />

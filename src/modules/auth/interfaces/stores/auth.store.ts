@@ -1,4 +1,3 @@
-import { Validator } from "@/src/lib/validator"
 import {DataState} from "@/src/lib/di/interface/data-state";
 
 export class AuthStore {
@@ -14,16 +13,10 @@ export class AuthStore {
 
     token = new DataState<string | null, string>({isLoading: false})
 
-    loginValidator = new Validator({
-        username: Validator.scheme.string().min(1),
-        password: Validator.scheme.string().min(1),
-    })
+    username = new DataState<string | null, string>({isLoading: false})
+    password = new DataState<string | null, string>({isLoading: false})
+    email = new DataState<string | null, string>({isLoading: false})
+    fullName = new DataState<string | null, string>({isLoading: false})
 
-    registerValidator = new Validator({
-        username: Validator.scheme.string().min(1),
-        password: Validator.scheme.string().min(1),
-        email: Validator.scheme.string().email(),
-        fullName: Validator.scheme.string().min(1),
-    })
 
 }

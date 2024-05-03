@@ -55,7 +55,7 @@ export class ChaptersAction {
 
         this.chaptersStore.searchEntities.setIsLoading(true)
 
-        const result = await loadChaptersBySearchUseCase(this.chaptersStore.searchValidator.values.searchQuery)
+        const result = await loadChaptersBySearchUseCase(this.chaptersStore.searchQuery.data || "")
 
         if (result.isErr()) {
             this.chaptersStore.searchEntities.setError(

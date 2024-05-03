@@ -8,6 +8,8 @@ import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-mo
 import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
 import {useColorScheme} from "react-native";
 import { MD3LightTheme, MD3DarkTheme, PaperProvider } from 'react-native-paper';
+import {useInitStores} from "@/src/modules/app/interface/init-store/use-init-stores";
+import {observer} from "mobx-react-lite";
 
 
 export {
@@ -41,8 +43,9 @@ export default function RootLayout () {
     return <RootLayoutNav/>;
 }
 
-const RootLayoutNav = () => {
+const RootLayoutNav = observer(() => {
     const colorScheme = useColorScheme();
+    const { isLoading } = useInitStores()
 
     const paperTheme =
         colorScheme === 'dark'
@@ -51,12 +54,12 @@ const RootLayoutNav = () => {
 
     return (
             <PaperProvider theme={paperTheme}>
-                <SessionProvider >
+                <SessionProvider isStoreLoading={isLoading} >
                     <Slot/>
                     <SectionsModal/>
                     <UserMenuModal/>
                 </SessionProvider>
             </PaperProvider>
     );
-}
+})
 

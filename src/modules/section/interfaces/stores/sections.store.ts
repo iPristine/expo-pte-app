@@ -18,8 +18,9 @@ export class SectionsStore {
 
   sections = new DataState<SectionEntity[], string>({ isLoading: false })
 
-  sectionDetailsId = new DataState<string, string>({ isLoading: false })
-  sectionDetails = new DataState<SectionEntity, string>({ isLoading: false })
+  sectionDetailsId = new DataState<string | null, string>({ isLoading: false })
+  sectionDetails = new DataState<SectionEntity | null, string>({ isLoading: false })
+
   setSections(sections: SectionEntity[]): void {
     this.sections.setData(sections)
   }

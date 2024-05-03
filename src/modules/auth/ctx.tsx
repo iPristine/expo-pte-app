@@ -22,7 +22,13 @@ export function useSession() {
     return context
 }
 
-export const SessionProvider = observer((props: React.PropsWithChildren) => {
+export const SessionProvider = observer( ({
+                                               children,
+                                               isStoreLoading,
+                                           }: {
+    children: React.ReactNode
+    isStoreLoading: boolean
+}) => {
     const [isLoading, setIsLoading] = useState(true)
     const {authStore} = useAuthContext()
 
@@ -42,16 +48,16 @@ export const SessionProvider = observer((props: React.PropsWithChildren) => {
 
     const contextValue = useMemo(
         () => ({
-            token: authStore.token.data,
-            isLoading: isLoading || authStore.token.isLoading,
+            token: authStore.token?.data || "",
+            isLoading: isLoading || authStore.token?.isLoading  || isStoreLoading,
         }),
-        [authStore.token.data, isLoading, authStore.token.isLoading]
+        [authStore.token.data, isLoading, authStore.token.isLoading, isStoreLoading]
     )
 
     return (
         <SessionContext.Provider
             value={contextValue}>
-            {props.children}
+            {children}
         </SessionContext.Provider>
     );
 })

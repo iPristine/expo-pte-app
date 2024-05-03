@@ -47,7 +47,7 @@ export const HomeScreen =  observer(() => {
         );
     }
 
-    if(chaptersStore.searchValidator.values.searchQuery?.length > 2 && chaptersStore.searchEntities.data){
+    if(chaptersStore.searchQuery.data && chaptersStore.searchEntities.data){
         return (
             <ScrollView style={{backgroundColor: background}}>
                 {chaptersStore.searchEntities.data.map(searchEntity => (

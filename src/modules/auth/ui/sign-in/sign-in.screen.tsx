@@ -22,15 +22,15 @@ export const SignInScreen = observer(() => {
                 placeholder="Логин"
                 autoCorrect={false}
                 autoCapitalize="none"
-                value={authStore.loginValidator.values.username}
-                onChangeText={authStore.loginValidator.handlers.username}
+                value={authStore.username.data || ""}
+                onChangeText={authStore.username.setData}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Пароль"
                 secureTextEntry={true}
-                value={authStore.loginValidator.values.password}
-                onChangeText={authStore.loginValidator.handlers.password}
+                value={authStore.password.data || ""}
+                onChangeText={authStore.password.setData}
             />
             <Button title="Войти" onPress={handleLogin} />
             <Button title="Назад" onPress={handleBack} />

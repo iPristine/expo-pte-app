@@ -55,8 +55,8 @@ export const Header = observer(() => {
           {isHome && <Searchbar 
                 placeholder="Search"
                 style={{width: 200}}
-                value={chaptersStore.searchValidator.values.searchQuery} 
-                onChangeText={chaptersStore.searchValidator.handlers.searchQuery} 
+                value={chaptersStore.searchQuery.data || ""}
+                onChangeText={chaptersStore.searchQuery.setData}
                 onIconPress={chaptersAction.searchChapters}
                 />
                 }
