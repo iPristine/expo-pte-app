@@ -2,6 +2,7 @@ import {Stack} from "expo-router";
 
 
 const AuthLayout = () => {
+
     return (
         <Stack>
             <Stack.Screen name="welcome"/>
@@ -10,3 +11,5 @@ const AuthLayout = () => {
         </Stack>
     )
 }
+
+export default AuthLayout

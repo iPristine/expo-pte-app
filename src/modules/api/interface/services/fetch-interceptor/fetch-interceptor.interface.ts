@@ -1,4 +1,4 @@
-import { RequestResponse } from "@lib/fetch-request"
+import {RequestResponse} from "@/src/lib/fetch-request";
 
 export type FetchInterceptorInterface = {
   onFetch<T>({

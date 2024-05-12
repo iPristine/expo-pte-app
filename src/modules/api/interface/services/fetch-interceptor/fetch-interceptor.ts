@@ -1,5 +1,5 @@
-import { RequestResponse } from "@lib/fetch-request"
 import type { FetchInterceptorInterface } from "./fetch-interceptor.interface"
+import {RequestResponse} from "@/src/lib/fetch-request";
 
 export class FetchInterceptor implements FetchInterceptorInterface {
   // eslint-disable-next-line @typescript-eslint/require-await

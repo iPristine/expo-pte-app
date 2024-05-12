@@ -6,7 +6,7 @@ import {useEffect} from 'react';
 import {SessionProvider} from "@/src/modules/auth/ctx";
 import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-modal";
 import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
-import {useColorScheme} from "react-native";
+import {useColorScheme, Text} from "react-native";
 import { MD3LightTheme, MD3DarkTheme, PaperProvider } from 'react-native-paper';
 import {useInitStores} from "@/src/modules/app/interface/init-store/use-init-stores";
 import {observer} from "mobx-react-lite";
@@ -17,24 +17,11 @@ export {
     ErrorBoundary,
 } from 'expo-router';
 
-export default function RootLayout () {
+function RootLayout () {
     const [isFontsLoaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
     });
-
-
-    useEffect(() => {
-        async function handleSplashScreen() {
-            if (isFontsLoaded) {
-                await SplashScreen.preventAutoHideAsync()
-            } else {
-                await SplashScreen.hideAsync()
-            }
-        }
-
-        handleSplashScreen()
-    }, [isFontsLoaded]);
 
     if (!isFontsLoaded) {
         return null;
@@ -63,3 +50,5 @@ const RootLayoutNav = observer(() => {
     );
 })
 
+
+export default RootLayout;

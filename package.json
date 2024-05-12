@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "prebuild": "expo prebuild",
-    "build": "expo build:android"
+    "build": "expo build:android",
+    "ts:check": "tsc"
   },
   "jest": {
     "preset": "jest-expo"

@@ -3,7 +3,6 @@ import {Portal, Modal, useTheme} from "react-native-paper";
 import {StyleSheet} from "react-native";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
 import { Text } from '@/components/Themed';
-import { white } from "@/src/style/colors";
 import { Menu } from 'react-native-paper';
 import {SectionEntity} from "@/src/modules/section/infra/types/section.entity";
 

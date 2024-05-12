@@ -1,7 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {Portal, Modal, useTheme} from "react-native-paper";
 import { Text } from '@/components/Themed';
-import { white } from "@/src/style/colors";
 import { Menu } from 'react-native-paper';
 import {useUserContext} from "@/src/modules/user/use-user-context";
 import {useAuthContext} from "@/src/modules/auth/use-auth-context";
