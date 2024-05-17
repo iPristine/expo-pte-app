@@ -1,15 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {useFonts} from 'expo-font';
 import {Slot} from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import {useEffect} from 'react';
 import {SessionProvider} from "@/src/modules/auth/ctx";
 import {SectionsModal} from "@/src/modules/section/ui/sections-modal/sections-modal";
 import {UserMenuModal} from "@/src/modules/user/ui/user-menu-modal/user-menu-modal";
-import {useColorScheme, Text} from "react-native";
-import { MD3LightTheme, MD3DarkTheme, PaperProvider } from 'react-native-paper';
 import {useInitStores} from "@/src/modules/app/interface/init-store/use-init-stores";
 import {observer} from "mobx-react-lite";
+import {AppProvider} from "@/src/modules/app/app.provider";
 
 
 export {
@@ -17,7 +14,7 @@ export {
     ErrorBoundary,
 } from 'expo-router';
 
-function RootLayout () {
+function RootLayout() {
     const [isFontsLoaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
@@ -31,22 +28,17 @@ function RootLayout () {
 }
 
 const RootLayoutNav = observer(() => {
-    const colorScheme = useColorScheme();
-    const { isLoading } = useInitStores()
+    const {isLoading} = useInitStores()
 
-    const paperTheme =
-        colorScheme === 'dark'
-            ? MD3DarkTheme
-            : MD3LightTheme ;
 
     return (
-            <PaperProvider theme={paperTheme}>
-                <SessionProvider isStoreLoading={isLoading} >
-                    <Slot/>
-                    <SectionsModal/>
-                    <UserMenuModal/>
-                </SessionProvider>
-            </PaperProvider>
+        <SessionProvider isStoreLoading={isLoading}>
+            <AppProvider>
+                <Slot/>
+                <SectionsModal/>
+                <UserMenuModal/>
+            </AppProvider>
+        </SessionProvider>
     );
 })
 

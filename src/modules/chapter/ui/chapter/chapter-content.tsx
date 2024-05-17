@@ -1,6 +1,7 @@
 import {ChapterContentEntity} from "@/src/modules/chapter/infra/types/chapter-content.entity";
 import {View} from "react-native";
 import {Icon, List, DataTable, Text } from 'react-native-paper';
+import {useAppContext} from "@/src/modules/app/use-app-context";
 
 
 
@@ -9,6 +10,10 @@ type Props = {
 }
 
 export const ChapterContent = ({chapterContent}: Props) => {
+    const {appStore} = useAppContext()
+    const variant = appStore.fontSize.data || undefined
+
+
     if (!chapterContent) return
 
     if (typeof chapterContent === "string"){
@@ -28,7 +33,7 @@ export const ChapterContent = ({chapterContent}: Props) => {
     )
 
     if (chapterContent.tagName === "span") return (
-        <Text selectable selectionColor="blue">
+        <Text variant={variant} selectable selectionColor="blue">
             {chapterContent.content?.map((innerChapterContent, i) => (
                 <ChapterContent
                     key={(typeof innerChapterContent === "string" ? innerChapterContent : innerChapterContent.tagName) + i}
@@ -39,7 +44,7 @@ export const ChapterContent = ({chapterContent}: Props) => {
 
     if (chapterContent.tagName === "p") {
         return (
-            <Text selectable selectionColor="blue">
+            <Text variant={variant} selectable selectionColor="blue">
                 {chapterContent.content?.map((innerChapterContent, i) => (
                     <ChapterContent
                         key={(typeof innerChapterContent === "string" ? innerChapterContent : innerChapterContent.tagName) + i}

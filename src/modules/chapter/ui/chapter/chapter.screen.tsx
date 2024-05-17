@@ -49,7 +49,7 @@ export const ChapterScreen = observer(() => {
     if (!chaptersStore.chapterDetails.data?.content?.length) {
         return (
             <View style={[styles.container, {backgroundColor: background}]}>
-                <Text>No content</Text>
+                <Text>Ничего нет</Text>
             </View>
         );
     }
@@ -57,11 +57,11 @@ export const ChapterScreen = observer(() => {
 
     return (
         <ScrollView style={[styles.screen, {backgroundColor: background}]} contentContainerStyle={styles.container}>
-
             {chaptersStore.chapterDetails.data.content.map((content, index) => (
                 <ChapterContent
                     key={(typeof content === "string" ? content : content.tagName) + index}
-                    chapterContent={content}/>
+                    chapterContent={content}
+                />
             ))}
         </ScrollView>
     );

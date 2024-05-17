@@ -4,5 +4,7 @@ export const SECURE_STORAGE_KEYS = {
     user: "user",
     deviceToken: "deviceToken",
     sessionId: "sessionId",
-    token: "token"
+    token: "token",
+    themeName: "themeName",
+    fontSize: "fontSize"
 }
