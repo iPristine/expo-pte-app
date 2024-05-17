@@ -22,42 +22,43 @@ export function useSession() {
     return context
 }
 
-export const SessionProvider = observer( ({
-                                               children,
-                                               isStoreLoading,
-                                           }: {
-    children: React.ReactNode
-    isStoreLoading: boolean
-}) => {
-    const [isLoading, setIsLoading] = useState(true)
-    const {authStore} = useAuthContext()
+export const SessionProvider = observer(
+    ({
+         children,
+         isStoreLoading,
+     }: {
+        children: React.ReactNode
+        isStoreLoading: boolean
+    }) => {
+        const [isLoading, setIsLoading] = useState(true)
+        const {authStore} = useAuthContext()
 
-    useEffect( () => {
-        const loadToken = async () => {
-            setIsLoading(true)
-            const token = await  AuthService.loadToken()
-            if (token) {
-                authStore.token.setData(token)
+        useEffect(() => {
+            const loadToken = async () => {
+                setIsLoading(true)
+                const token = await AuthService.loadToken()
+                if (token) {
+                    authStore.token.setData(token)
+                }
+                setIsLoading(false)
             }
-            setIsLoading(false)
-        }
 
 
-        loadToken()
-    }, [])
+            loadToken()
+        }, [])
 
-    const contextValue = useMemo(
-        () => ({
-            token: authStore.token?.data || "",
-            isLoading: isLoading || authStore.token?.isLoading  || isStoreLoading,
-        }),
-        [authStore.token.data, isLoading, authStore.token.isLoading, isStoreLoading]
-    )
+        const contextValue = useMemo(
+            () => ({
+                token: authStore.token?.data || "",
+                isLoading: isLoading || authStore.token?.isLoading || isStoreLoading,
+            }),
+            [authStore.token.data, isLoading, authStore.token.isLoading, isStoreLoading]
+        )
 
-    return (
-        <SessionContext.Provider
-            value={contextValue}>
-            {children}
-        </SessionContext.Provider>
-    );
-})
+        return (
+            <SessionContext.Provider
+                value={contextValue}>
+                {children}
+            </SessionContext.Provider>
+        );
+    })

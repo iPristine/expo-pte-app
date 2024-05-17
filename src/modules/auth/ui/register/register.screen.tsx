@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {observer} from "mobx-react-lite";
 import {router} from "expo-router";
 import {useAuthContext} from "@/src/modules/auth/use-auth-context";
+import {useTheme, TextInput, Button} from "react-native-paper";
 
 export const RegisterScreen =  observer(() => {
+    const {colors: {background, error}} = useTheme()
     const {authAction, authStore} = useAuthContext()
 
     const handleRegister = () => {
@@ -16,7 +18,7 @@ export const RegisterScreen =  observer(() => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: background}}>
             <TextInput
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -50,8 +52,12 @@ export const RegisterScreen =  observer(() => {
                 value={authStore.password.data || ""}
                 onChangeText={authStore.password.setData}
             />
-            <Button title="Зарегистрироваться" onPress={handleRegister} />
-            <Button title="Назад" onPress={handleBack} />
+            <Button onPress={handleRegister}>
+                Зарегистрироваться
+            </Button>
+            <Button onPress={handleBack}>
+                Назад
+            </Button>
         </View>
     );
 })

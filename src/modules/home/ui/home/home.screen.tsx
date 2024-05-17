@@ -24,16 +24,16 @@ export const HomeScreen =  observer(() => {
 
     if (sectionsStore.sectionDetails.isLoading || chaptersStore.searchEntities.isLoading) {
         return (
-            <View>
-                <Text>Loading...</Text>
+            <View style={{backgroundColor: background, flex: 1}}>
+                <Text>Загрузка...</Text>
             </View>
         );
     }
 
     if(sectionsStore.sectionDetails.isError){
         return (
-            <View>
-                <Text onPress={sectionsAction.loadSections}>Try again</Text>
+            <View style={{backgroundColor: background, flex: 1}}>
+                <Text onPress={sectionsAction.loadSections}>Обновить</Text>
                 <Text>Error: {sectionsStore.sections.error}</Text>
             </View>
         );
@@ -41,8 +41,8 @@ export const HomeScreen =  observer(() => {
 
     if(!sectionsStore.sectionDetails.data?.chapters.length){
         return (
-            <View>
-                <Text>No chapters</Text>
+            <View style={{backgroundColor: background}}>
+                <Text>Нет глав</Text>
             </View>
         );
     }
@@ -58,6 +58,7 @@ export const HomeScreen =  observer(() => {
     }
 
     return (
+
         <ScrollView style={{backgroundColor: background}}>
 
             {sectionsStore.sectionDetails.data.chapters.map(chapter => (

@@ -18,7 +18,6 @@ export class AuthAction {
     }
 
      handleLogin = async (): Promise<void> => {
-        console.log("handleLogin")
         this.authStore.token.setError(undefined)
         const username = this.authStore.username.data
          const password = this.authStore.password.data

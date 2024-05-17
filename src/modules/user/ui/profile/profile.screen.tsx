@@ -21,16 +21,16 @@ export const ProfileScreen = observer(() => {
 
     if (userStore.user.isLoading) {
         return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
+            <View style={[styles.container, {backgroundColor: background}]}>
+                <Text>Загрузка...</Text>
             </View>
         );
     }
 
     if (userStore.user.isError) {
         return (
-            <View style={styles.container}>
-                <Text onPress={userAction.loadUser}>Try again</Text>
+            <View style={[styles.container, {backgroundColor: background}]}>
+                <Text onPress={userAction.loadUser}>Обновить</Text>
                 <Text>Error: {userStore.user.error}</Text>
             </View>
         );
@@ -38,8 +38,8 @@ export const ProfileScreen = observer(() => {
 
     if (!userStore.user.data) {
         return (
-            <View style={styles.container}>
-                <Text>No data</Text>
+            <View style={[styles.container, {backgroundColor: background}]}>
+                <Text>Нет данных</Text>
             </View>
         );
     }
@@ -47,25 +47,38 @@ export const ProfileScreen = observer(() => {
 
     return (
         <ScrollView style={{backgroundColor: background}}>
-        <Card>
-            <Card.Content>
-                <Text variant="bodySmall">Имя:</Text>
-                <Text variant="titleLarge">{userStore.user.data.fullName}</Text>
-                <Text variant="bodySmall">email:</Text>
-                <Text variant="bodyMedium">{userStore.user.data.email}</Text>
-                <Text variant="bodySmall">username:</Text>
-                <Text variant="bodyMedium">{userStore.user.data.username}</Text>
-                <Text variant="bodySmall">Статус: {userStore.user.data.disabled ? <Icon size={16} source="minus-circle-outline" color="red" /> : <Icon size={16} source="check-circle-outline" color="green" />}
-                </Text>
+            <Card>
+                <Card.Content>
+                    <Text variant="bodySmall">Имя:</Text>
+                    <Text variant="titleLarge">{userStore.user.data.fullName}</Text>
+                    <Text variant="bodySmall">email:</Text>
+                    <Text variant="bodyMedium">{userStore.user.data.email}</Text>
+                    <Text variant="bodySmall">username:</Text>
+                    <Text variant="bodyMedium">{userStore.user.data.username}</Text>
+                    <Text variant="bodySmall">Статус: {userStore.user.data.disabled ?
+                        <Icon size={16} source="minus-circle-outline" color="red"/> :
+                        <Icon size={16} source="check-circle-outline" color="green"/>}
+                    </Text>
 
-                <Button onPress={handleOpenFavorates}><View
-                    style={{display: "flex", flexDirection: "row", alignItems: "center", gap: 8}}>
-                    <Text variant="labelMedium">Избранное</Text>
-                    <Badge>{userStore.user.data.favorates.length}</Badge>
-                </View>
-                </Button>
-            </Card.Content>
-        </Card>
+                    <Button onPress={handleOpenFavorates}>
+                        <View
+                            style={{display: "flex", flexDirection: "row", alignItems: "center", gap: 8}}
+                        >
+                            <Text variant="labelMedium">Избранное</Text>
+                            <Badge>{userStore.user.data.favorates.length}</Badge>
+                        </View>
+                    </Button>
+
+                    <Button onPress={handleOpenFavorates}>
+                        <View
+                            style={{display: "flex", flexDirection: "row", alignItems: "center", gap: 8}}
+                        >
+                            <Text variant="labelMedium">Сменить тему</Text>
+                            <Icon size={16} source={'theme-light-dark'} />
+                        </View>
+                    </Button>
+                </Card.Content>
+            </Card>
         </ScrollView>
     );
 })

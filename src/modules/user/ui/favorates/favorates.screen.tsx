@@ -16,16 +16,16 @@ export const FavoratesScreen =  observer(() => {
 
     if (userStore.favorates.isLoading) {
         return (
-            <View style={{backgroundColor: background}}>
-                <Text>Loading...</Text>
+            <View style={{backgroundColor: background, flex: 1}}>
+                <Text>Загрузка...</Text>
             </View>
         );
     }
 
     if(userStore.favorates.isError){
         return (
-            <View style={{backgroundColor: background}}>
-                <Text onPress={userAction.loadFavorates}>Try again</Text>
+            <View style={{backgroundColor: background, flex: 1}}>
+                <Text onPress={userAction.loadFavorates}>Обновить</Text>
                 <Text>Error: {userStore.favorates.error}</Text>
             </View>
         );
@@ -33,7 +33,7 @@ export const FavoratesScreen =  observer(() => {
 
     if(!userStore.favorates.data?.length){
         return (
-            <View style={{backgroundColor: background}}>
+            <View style={{backgroundColor: background, flex: 1}}>
                 <Text>В избранном пусто</Text>
             </View>
         );

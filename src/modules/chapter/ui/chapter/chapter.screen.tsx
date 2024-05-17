@@ -25,15 +25,15 @@ export const ChapterScreen = observer(() => {
 
     if (chaptersStore.chapterDetails.isLoading) {
         return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
+            <View style={[styles.container, {backgroundColor: background, flex: 1}]}>
+                <Text>Загрузка...</Text>
             </View>
         );
     }
 
     if (chaptersStore.chapterDetails.isError) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: background, flex: 1}]}>
                 <Text onPress={() => {
                     if (chapterId) {
                         chaptersAction.loadChapter(chapterId)
@@ -48,7 +48,7 @@ export const ChapterScreen = observer(() => {
 
     if (!chaptersStore.chapterDetails.data?.content?.length) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: background}]}>
                 <Text>No content</Text>
             </View>
         );

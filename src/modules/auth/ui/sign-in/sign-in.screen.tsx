@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {useAuthContext} from "@/src/modules/auth/use-auth-context";
 import {observer} from "mobx-react-lite";
 import {router} from "expo-router";
+import {useTheme, TextInput, Button, Text} from "react-native-paper";
 
 export const SignInScreen = observer(() => {
+    const {colors: {background, error}} = useTheme()
+
     const { authAction, authStore  } = useAuthContext()
 
     const handleLogin = () => {
@@ -16,7 +19,7 @@ export const SignInScreen = observer(() => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: background}}>
             <TextInput
                 style={styles.input}
                 placeholder="Логин"
@@ -32,8 +35,17 @@ export const SignInScreen = observer(() => {
                 value={authStore.password.data || ""}
                 onChangeText={authStore.password.setData}
             />
-            <Button title="Войти" onPress={handleLogin} />
-            <Button title="Назад" onPress={handleBack} />
+            <Button  onPress={handleLogin}>
+                Войти
+            </Button>
+            <Button  onPress={handleBack}>
+                Назад
+            </Button>
+            {authStore.token.error && (
+                <Text style={{color: error}}>
+                    {authStore.token.error}
+                </Text>
+            )}
         </View>
     );
 })
