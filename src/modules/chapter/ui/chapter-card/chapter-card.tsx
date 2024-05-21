@@ -34,11 +34,13 @@ export const ChapterCard = observer(({chapter, isFavorate}:Props) => {
     const starIconName = isFavorate ? "star" : "star-outline"
 
     return (
+        <TouchableOpacity style={{paddingRight: 8}} onPress={handleClick}>
         <Card.Title
             onTouchStart={handleClick}
             title={chapter.name}
             left={(props) => <TouchableOpacity onPress={handleClick}><Avatar.Icon {...props} icon="book-arrow-right-outline" /></TouchableOpacity>}
             right={(props) => <TouchableOpacity onPress={handleStartClick}><Avatar.Icon {...props} icon={starIconName} /></TouchableOpacity>}
         />
+        </TouchableOpacity>
     )
 })

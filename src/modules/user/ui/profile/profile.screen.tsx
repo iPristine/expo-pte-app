@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {observer} from "mobx-react-lite";
 import {Badge, Button, Card, Icon, Text, useTheme} from 'react-native-paper';
@@ -16,18 +16,17 @@ const fontVariants: VariantProp<string>[] = [
     "headlineMedium",
     "headlineSmall",
     "titleLarge",
-    "titleMedium",
-    "titleSmall",
-    "labelLarge",
-    "labelMedium",
-    "labelSmall",
     "bodyLarge",
+    "titleMedium",
+    "labelLarge",
+    "titleSmall",
     "bodyMedium",
-    "bodySmall"
+    "labelMedium",
+    "bodySmall",
+    "labelSmall",
 ]
 
 export const ProfileScreen = observer(() => {
-    const [fontVariantNumber, setFontVariantNumber] = useState(7)
     const {colors: {background}} = useTheme()
     const {userStore, userAction} = useUserContext()
     const {appStore, appAction} = useAppContext()
@@ -48,22 +47,31 @@ export const ProfileScreen = observer(() => {
     const handleOpenFavorates = () => {
         router.push("/favorates")
     }
+    const index = fontVariants.indexOf(appStore.fontSize.data ?? 'titleMedium')
 
-    const getFontVariant = ()=>{
-        return fontVariants[fontVariantNumber]
-    }
-
-    const isPrevFontDisabled = fontVariantNumber === fontVariants.length+1
-    const isNextFontDisabled = fontVariantNumber === 0
+    const isPrevFontDisabled = (fontVariants.length-1) === index
+    const isNextFontDisabled = index === 0
 
     const handleNextFontVariant = () => {
-        setFontVariantNumber(fontVariantNumber-1)
-        appAction.setFontSize(getFontVariant())
+        if(!appStore.fontSize.data){
+            appAction.setFontSize("titleMedium")
+            return
+        }
+        const index = fontVariants.indexOf(appStore.fontSize.data)
+        if(index >0){
+            appAction.setFontSize(fontVariants[index-1])
+        }
     }
 
     const handlePrevFontVariant = () => {
-        setFontVariantNumber(fontVariantNumber+1)
-        appAction.setFontSize(getFontVariant())
+        if(!appStore.fontSize.data){
+            appAction.setFontSize("titleMedium")
+            return
+        }
+        const index = fontVariants.indexOf(appStore.fontSize.data)
+        if(index < fontVariants.length-1){
+            appAction.setFontSize(fontVariants[index+1])
+        }
     }
 
 
@@ -128,11 +136,11 @@ export const ProfileScreen = observer(() => {
                     </Button>
 
                     <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                        <Button disabled={isPrevFontDisabled} onPress={handlePrevFontVariant}>
+                        <Button style={{alignItems: 'center'}} disabled={isPrevFontDisabled} onPress={handlePrevFontVariant}>
                             <Icon size={32} source={'minus'}/>
                         </Button>
-                        <Text variant={appStore.fontSize.data || undefined}>Пример текста</Text>
-                        <Button disabled={isNextFontDisabled} onPress={handleNextFontVariant}>
+                        <Text variant={appStore.fontSize.data || undefined}>{appStore.fontSize.data}</Text>
+                        <Button style={{alignItems: 'center'}} disabled={isNextFontDisabled} onPress={handleNextFontVariant}>
                             <Icon size={32} source={'plus'}/>
                         </Button>
                     </View>
