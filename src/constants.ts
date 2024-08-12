@@ -6,5 +6,6 @@ export const SECURE_STORAGE_KEYS = {
     sessionId: "sessionId",
     token: "token",
     themeName: "themeName",
-    fontSize: "fontSize"
+    fontSize: "fontSize",
+    favorites: "favorites"
 }

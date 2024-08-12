@@ -75,7 +75,7 @@ export const Header = observer(() => {
                     }
                     <View style={layoutStyles.iconBoxContainer}>
                         <TouchableOpacity onPress={userStore.userMenuModal.handleOpen}>
-                            <Icon source="account" size={26}/>
+                            <Icon source="cog-outline" size={26}/>
                         </TouchableOpacity>
                     </View>
                 </View>

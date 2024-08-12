@@ -8,7 +8,7 @@ import {router} from "expo-router";
 
 
 export const UserMenuModal = observer(()=>{
-        const { userStore} =useUserContext()
+    const { userStore} = useUserContext()
     const {authAction} = useAuthContext()
     const { colors: {background}} = useTheme()
     const containerStyle = {backgroundColor: background, padding: 20};
@@ -38,7 +38,7 @@ export const UserMenuModal = observer(()=>{
                     <Text>Меню</Text>
                     <Menu.Item
                         onPress={handleProfileClick}
-                        title={'Профиль'}
+                        title={'Настройки'}
                     />
                     <Menu.Item
                         onPress={handleFavoratesClick}
@@ -49,8 +49,6 @@ export const UserMenuModal = observer(()=>{
                         onPress={handleSignOutClick}
                         title={'Выйти'}
                     />
-
-
                 </Modal>
             </Portal>
         )

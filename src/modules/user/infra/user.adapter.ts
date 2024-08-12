@@ -6,6 +6,8 @@ import {ChapterEntity} from "@/src/modules/chapter/infra/types/chapter.entity";
 import {UserEntity} from "@/src/modules/user/infra/types/user.entity";
 import {UserResponse} from "@/src/modules/user/infra/types/user.response";
 import {userResponseMapper} from "@/src/modules/user/infra/mappers/user-response.mapper";
+import { SecureStore } from "@/src/lib/secure-store";
+import { SECURE_STORAGE_KEYS } from "@/src/constants";
 
 export class UserAdapter extends Adapter {
     private apiClient = ApiClient.getInstance()
@@ -28,30 +30,66 @@ export class UserAdapter extends Adapter {
     }
 
     async loadFavorates(): Promise<Result<ChapterEntity[], Error>> {
-        const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity[]>(
-            `${BASE_API_ENDPOINT}/users/favorates`,
+        // const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity[]>(
+        //     `${BASE_API_ENDPOINT}/users/favorates`,
+        //     {
+        //         headers: { ...(await this.getAuthHeaders()) },
+        //     }
+        // )
+
+        const favoritesIds = await SecureStore.load(SECURE_STORAGE_KEYS.favorites);
+
+        if (!favoritesIds || typeof favoritesIds === "string") {
+            return Err(new Error(`У вас нет избранных глав`))
+        }
+
+        const ids = Object.entries(favoritesIds).map(([key, value]) => {
+            return value
+        })
+
+        const { ok, json, status } = await this.apiClient.secured.post<ChapterEntity[]>(
+            `${BASE_API_ENDPOINT}/chapters/many`,
             {
-                headers: { ...(await this.getAuthHeaders()) },
+                body: { 'ids': ids }
             }
-        )
+        );
 
         if (!ok || !json) {
             return Err(new Error(`Favorates loading failed ${status}`))
         }
 
-        const result = json
-
-        return Ok(result)
+        return Ok(json)
     }
 
     async addToFavorates(chapterId: string): Promise<Result<ChapterEntity[], Error>> {
-        const { ok, json, status } = await this.apiClient.secured.post<ChapterEntity[]>(
-            `${BASE_API_ENDPOINT}/users/favorates/${chapterId}`,
-        {
-            headers: { ...(await this.getAuthHeaders()) },
-            body: { chapterId }
+        // const { ok, json, status } = await this.apiClient.secured.post<ChapterEntity[]>(
+        //     `${BASE_API_ENDPOINT}/users/favorates/${chapterId}`,
+        // {
+        //     headers: { ...(await this.getAuthHeaders()) },
+        //     body: { chapterId }
+        // }
+        // )
+
+        const favoritesIds = await SecureStore.load(SECURE_STORAGE_KEYS.favorites);
+
+        if (typeof favoritesIds === "string") {
+            return Err(new Error(`Favorates loading failed`))
         }
-        )
+
+        const ids = Object.entries(favoritesIds ? favoritesIds : []).map(([key, value]) => {
+            return value
+        })
+
+        await ids.push(chapterId)
+
+        await SecureStore.save(SECURE_STORAGE_KEYS.favorites, [...ids])
+
+        const { ok, json, status } = await this.apiClient.secured.post<ChapterEntity[]>(
+            `${BASE_API_ENDPOINT}/chapters/many`,
+            {
+                body: { 'ids': ids }
+            }
+        );
 
         if (!ok || !json) {
             return Err(new Error(`Favorates adding failed ${status}`))
