@@ -43,16 +43,21 @@ export class UserAdapter extends Adapter {
             return Err(new Error(`У вас нет избранных глав`))
         }
 
-        const ids = Object.entries(favoritesIds).map(([key, value]) => {
+        const ids = Object.entries(favoritesIds).map<string>(([key, value]) => {
             return value
         })
+
+        console.log("ids", ids)
 
         const { ok, json, status } = await this.apiClient.secured.post<ChapterEntity[]>(
             `${BASE_API_ENDPOINT}/chapters/many`,
             {
-                body: { 'ids': ids }
+                headers: { ...(await this.getAuthHeaders()) },
+                body: { ids },
             }
         );
+
+        console.log("json", json)
 
         if (!ok || !json) {
             return Err(new Error(`Favorates loading failed ${status}`))
