@@ -48,6 +48,7 @@ export class AuthAction {
     handleSignOut = () => {
         this.authStore.token.setData(null)
         AuthService.clearToken()
+        router.replace('/(auth)/authentication/welcome')
     }
 
     handleRegister = async () =>{

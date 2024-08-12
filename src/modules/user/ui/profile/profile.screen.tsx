@@ -135,7 +135,7 @@ export const ProfileScreen = observer(() => {
                         </View>
                     </Button>
 
-                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+                    {/* <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                         <Button style={{alignItems: 'center'}} disabled={isPrevFontDisabled} onPress={handlePrevFontVariant}>
                             <Icon size={32} source={'minus'}/>
                         </Button>
@@ -143,7 +143,7 @@ export const ProfileScreen = observer(() => {
                         <Button style={{alignItems: 'center'}} disabled={isNextFontDisabled} onPress={handleNextFontVariant}>
                             <Icon size={32} source={'plus'}/>
                         </Button>
-                    </View>
+                    </View> */}
                 </Card.Content>
             </Card>
         </ScrollView>

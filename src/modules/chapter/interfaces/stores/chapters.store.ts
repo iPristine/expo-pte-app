@@ -18,7 +18,7 @@ export class ChaptersStore {
   searchEntities = new DataState<SearchEntity[], string>({ isLoading: false })
 
   chapters = new DataState<ChapterEntity[], string>({ isLoading: false })
-  chapterDetails = new DataState<ChapterEntity, string>({ isLoading: false })
+  chapterDetails = new DataState<ChapterEntity, string>({ isLoading: true })
   setChapters(chapters: ChapterEntity[]): void {
     this.chapters.setData(chapters)
   }

@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "expo-pte-app",
+    "name": "ПТЭ КХП",
     "slug": "expo-pte-app",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -40,9 +40,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "e608dfe7-78bf-4a12-8bb7-1a0d0931e4e9"
+        "projectId": "4e4fc672-6158-4b47-ba5e-7220d04c053a"
       }
     },
-    "owner": "dmalykh"
+    "owner": "s3v04ka"
   }
 }

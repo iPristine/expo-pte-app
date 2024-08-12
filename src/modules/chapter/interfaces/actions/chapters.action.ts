@@ -47,7 +47,7 @@ export class ChaptersAction {
             this.chaptersStore.chapterDetails.setError(undefined)
         }
 
-        this.chaptersStore.chapterDetails.setIsLoading(false)
+        // this.chaptersStore.chapterDetails.setIsLoading(false)
     }
 
 

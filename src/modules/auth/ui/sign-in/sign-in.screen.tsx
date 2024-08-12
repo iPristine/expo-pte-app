@@ -6,7 +6,7 @@ import {router} from "expo-router";
 import {useTheme, TextInput, Button, Text} from "react-native-paper";
 
 export const SignInScreen = observer(() => {
-    const {colors: {background, error}} = useTheme()
+    const {colors: {primary, onPrimary, error}} = useTheme()
 
     const { authAction, authStore  } = useAuthContext()
 
@@ -19,9 +19,9 @@ export const SignInScreen = observer(() => {
     }
 
     return (
-        <View style={{...styles.container, backgroundColor: background}}>
+        <View style={{...styles.container, backgroundColor: "#282481"}}>
             <TextInput
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Логин"
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -29,8 +29,10 @@ export const SignInScreen = observer(() => {
                 onChangeText={authStore.username.setData}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Пароль"
+                autoCorrect={false}
+                autoCapitalize='none'
                 secureTextEntry={true}
                 value={authStore.password.data || ""}
                 onChangeText={authStore.password.setData}

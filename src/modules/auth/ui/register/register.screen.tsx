@@ -6,7 +6,7 @@ import {useAuthContext} from "@/src/modules/auth/use-auth-context";
 import {useTheme, TextInput, Button} from "react-native-paper";
 
 export const RegisterScreen =  observer(() => {
-    const {colors: {background, error}} = useTheme()
+    const {colors: {primary, onPrimary, error}} = useTheme()
     const {authAction, authStore} = useAuthContext()
 
     const handleRegister = () => {
@@ -18,11 +18,11 @@ export const RegisterScreen =  observer(() => {
     }
 
     return (
-        <View style={{...styles.container, backgroundColor: background}}>
+        <View style={{...styles.container, backgroundColor: "#282481"}}>
             <TextInput
                 autoCorrect={false}
                 autoCapitalize="none"
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Логин"
                 value={authStore.username.data || ""}
                 onChangeText={authStore.username.setData}
@@ -30,7 +30,7 @@ export const RegisterScreen =  observer(() => {
             <TextInput
                 autoCorrect={false}
                 autoCapitalize="none"
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Email"
                 keyboardType="email-address"
                 value={authStore.email.data || ""}
@@ -38,7 +38,7 @@ export const RegisterScreen =  observer(() => {
             />
             <TextInput
                 autoCorrect={false}
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Полное имя"
                 value={authStore.fullName.data || ""}
                 onChangeText={authStore.fullName.setData}
@@ -46,7 +46,7 @@ export const RegisterScreen =  observer(() => {
             <TextInput
                 autoCorrect={false}
                 autoCapitalize="none"
-                style={styles.input}
+                style={[styles.input]}
                 placeholder="Пароль"
                 secureTextEntry={true}
                 value={authStore.password.data || ""}

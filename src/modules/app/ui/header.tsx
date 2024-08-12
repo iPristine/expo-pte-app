@@ -43,7 +43,7 @@ export const Header = observer(() => {
     }
 
     return (
-        <View style={{backgroundColor: background}}>
+        <View style={{backgroundColor: background, elevation: 10}}>
             {isAndroid && (
                 <StatusBar animated barStyle="dark-content" backgroundColor={background}/>
             )}
@@ -52,7 +52,7 @@ export const Header = observer(() => {
                     <View style={layoutStyles.iconBox}>
                         {isHome ? (
                             <TouchableOpacity onPress={sectionsStore.sectionsMenu.handleOpen}>
-                                <Icon source="book-multiple-outline" size={26}/>
+                                <Icon source="menu" size={26}/>
                             </TouchableOpacity>
                         ) : (
                             <TouchableOpacity onPress={handleBack}>

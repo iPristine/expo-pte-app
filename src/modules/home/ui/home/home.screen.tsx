@@ -10,7 +10,7 @@ import {SearchEntityCard} from "@/src/modules/chapter/ui/search-entity-card/sear
 export const HomeScreen =  observer(() => {
     const {sectionsStore, sectionsAction} = useSectionContext()
     const {chaptersStore} = useChapterContext()
-    const {colors: {background}} = useTheme()
+    const {colors: {background, onBackground}} = useTheme()
 
     useEffect(() => {
         sectionsAction.loadSections()
@@ -60,7 +60,7 @@ export const HomeScreen =  observer(() => {
     return (
 
         <ScrollView style={{backgroundColor: background}}>
-
+            <Text style={{color: onBackground}}>{sectionsStore.sectionDetails.data.name}</Text>
             {sectionsStore.sectionDetails.data.chapters.map(chapter => (
                 <ChapterCard key={chapter.id} chapter={chapter} />
             ))}

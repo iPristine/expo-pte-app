@@ -5,6 +5,4 @@ export type SearchEntity = {
     chapterId: string,
     chapterName: string,
     sectionName: string,
-    iter: number,
-    contentElement: ChapterContentEntity
 }
