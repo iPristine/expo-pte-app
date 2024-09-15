@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { observer } from "mobx-react-lite";
 import { useChapterContext } from "@/src/modules/chapter/use-chapter-context";
 import { useGlobalSearchParams } from "expo-router";
-import { useTheme, Text, ActivityIndicator } from "react-native-paper";
-import { WebView } from "react-native-webview";
+import { useTheme, Text, ActivityIndicator, Avatar } from "react-native-paper";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { BASE_API_ENDPOINT } from "@/config";
+import { useUserContext } from "@/src/modules/user/use-user-context";
 const rgbToHex = (rgb: string) => {
   const [r, g, b] = rgb
     .replace("rgb(", "")
@@ -24,8 +25,35 @@ export const ChapterScreen = observer(() => {
   }>();
 
   const { chaptersAction, chaptersStore } = useChapterContext();
+  const { userAction } = useUserContext();
 
   const wvRef = useRef<WebView>(null);
+
+  const [selectedText, setSelectedText] = useState("");
+
+  const [isFavoratet, setIsFavorate] = useState(false);
+
+  const onMessage = (e: WebViewMessageEvent) => {
+    const selectedText = e.nativeEvent.data;
+    if(selectedText === 'no-selection') {
+      setSelectedText('');
+      setIsFavorate(false);
+      return;
+    }
+    setSelectedText(selectedText);
+  }
+
+  const AddToFavoraties = () => {
+    setIsFavorate(true);
+    
+    if (!chaptersStore.chapterDetails.data?.name) {
+      return;
+    }
+
+    userAction.addToFavorates(chapterId, chaptersStore.chapterDetails.data?.name, selectedText);
+  }
+
+  const starIconName = isFavoratet ? "star" : "star-outline"
 
   useEffect(() => {
     if (chapterId) {
@@ -68,10 +96,21 @@ export const ChapterScreen = observer(() => {
   )}", "${rgbToHex(primary)}", "${rgbToHex(primary)}", "${rgbToHex(
     onPrimary
   )}", "${BASE_API_ENDPOINT}"); 
-    ${
-      chaptersStore.searchQuery?.data
-        ? `searchKeyword("${chaptersStore.searchQuery.data}");`
-        : ""
+    function checkSelection() {
+                    var selectedText = window.getSelection().toString();
+                    if (selectedText === '') {
+                      window.ReactNativeWebView.postMessage('no-selection');
+                    } else {
+                      window.ReactNativeWebView.postMessage(selectedText);
+                    }
+                  }
+
+                  document.addEventListener('selectionchange', function() {
+                    setTimeout(checkSelection, 100);
+                  });
+    ${chaptersStore.searchQuery?.data
+      ? `searchKeyword("${chaptersStore.searchQuery.data.trim()}");`
+      : ""
     }
     true;`;
 
@@ -81,8 +120,9 @@ export const ChapterScreen = observer(() => {
         onLoadEnd={() =>
           setTimeout(() => {
             chaptersStore.chapterDetails.setIsLoading(false);
-          }, 1500)
+          }, 500)
         }
+        onMessage={onMessage}
         setSupportMultipleWindows={false}
         scalesPageToFit
         domStorageEnabled
@@ -90,13 +130,17 @@ export const ChapterScreen = observer(() => {
         injectedJavaScript={js}
         javaScriptEnabled={true}
         ref={wvRef}
-        textZoom={150}
+        textZoom={200}
         containerStyle={{ padding: 3, backgroundColor: background }}
-        webviewDebuggingEnabled={true}
         source={{
-          uri: BASE_API_ENDPOINT+chaptersStore.chapterDetails.data.content,
+          html: chaptersStore.chapterDetails.data.content,
         }}
       />
+      {selectedText && (
+        <TouchableOpacity onPress={AddToFavoraties} style={{ position: "absolute", left: 10, bottom: 10 }}>
+          <Avatar.Icon size={60} icon={starIconName} />
+        </TouchableOpacity>
+      )}
       {chaptersStore.chapterDetails.isLoading && (
         <View
           style={[

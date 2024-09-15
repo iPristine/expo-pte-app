@@ -13,18 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/**"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dmalykh.expopteapp"
+      "bundleIdentifier": "com.vuhin.expopteapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.dmalykh.expopteapp"
+      "package": "com.vuhin.expopteapp"
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +33,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font"
     ],
     "extra": {
       "router": {

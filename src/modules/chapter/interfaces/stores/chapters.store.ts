@@ -17,6 +17,8 @@ export class ChaptersStore {
 
   searchEntities = new DataState<SearchEntity[], string>({ isLoading: false })
 
+  isSearching = new DataState<boolean, string>({ isLoading: false })
+
   chapters = new DataState<ChapterEntity[], string>({ isLoading: false })
   chapterDetails = new DataState<ChapterEntity, string>({ isLoading: true })
   setChapters(chapters: ChapterEntity[]): void {

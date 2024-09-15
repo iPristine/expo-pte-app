@@ -12,12 +12,9 @@ export default function AppLayout() {
       if (isLoading) {
         await SplashScreen.preventAutoHideAsync();
       } else {
-        if (!token || token.length === 0) {
-          // On web, static rendering will stop here as the user is not authenticated
-          // in the headless Node process that the pages are rendered in.
-          router.replace("/(auth)/authentication/welcome");
-        }
-        await SplashScreen.hideAsync();
+        await new Promise(resolve => setTimeout(resolve, 4000)).then(() => {
+          SplashScreen.hideAsync();
+        });
       }
     }
 

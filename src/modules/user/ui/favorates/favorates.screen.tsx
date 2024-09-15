@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import { View, ScrollView } from 'react-native';
 import {observer} from "mobx-react-lite";
-import {ChapterCard} from "@/src/modules/chapter/ui/chapter-card/chapter-card";
 import {useUserContext} from "@/src/modules/user/use-user-context";
 import {useTheme, Text} from "react-native-paper";
+import { FavorateAppendCard } from '@/src/modules/chapter/ui/favorate-card/favorate-append-card';
+import { FavorateCard } from '@/src/modules/chapter/ui/favorate-card/favorate-card';
 
 export const FavoratesScreen =  observer(() => {
     const {colors: {background}} = useTheme()
@@ -42,8 +43,8 @@ export const FavoratesScreen =  observer(() => {
 
     return (
         <ScrollView style={{backgroundColor: background}}>
-            {userStore.favorates.data.map(chapter => (
-                <ChapterCard key={chapter.id} chapter={chapter} isFavorate />
+            {userStore.favorates.data.map((chapter) => (
+                <FavorateAppendCard key={`favorate-card-${chapter.id}`} chapter={chapter}/>
             ))}
         </ScrollView>
     );

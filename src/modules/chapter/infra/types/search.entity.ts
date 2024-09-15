@@ -2,7 +2,5 @@ import {ChapterContentEntity} from "@/src/modules/chapter/infra/types/chapter-co
 
 export type SearchEntity = {
     id: number,
-    chapterId: string,
-    chapterName: string,
-    sectionName: string,
+    name: string,
 }

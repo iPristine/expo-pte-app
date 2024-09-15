@@ -31,11 +31,18 @@ export const Header = observer(() => {
     const isHome = pathname === "/"
 
     const handleBack = () => {
+        if(!chaptersStore.isSearching.data){
+            chaptersStore.searchQuery.setData(null);
+        }
         router.back()
     }
 
     const onSearchChange = (text: string) => {
         chaptersStore.searchQuery.setData(text)
+
+        if(text.length === 0){
+            chaptersStore.isSearching.setData(false);
+        }
 
         if(text.length > 3){
             chaptersAction.searchChapters()

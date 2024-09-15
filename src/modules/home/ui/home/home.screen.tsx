@@ -41,7 +41,7 @@ export const HomeScreen =  observer(() => {
 
     if(!sectionsStore.sectionDetails.data?.chapters.length){
         return (
-            <View style={{backgroundColor: background}}>
+            <View style={{backgroundColor: background, height: '100%'}}>
                 <Text>Нет глав</Text>
             </View>
         );
@@ -58,7 +58,6 @@ export const HomeScreen =  observer(() => {
     }
 
     return (
-
         <ScrollView style={{backgroundColor: background}}>
             <Text style={{color: onBackground}}>{sectionsStore.sectionDetails.data.name}</Text>
             {sectionsStore.sectionDetails.data.chapters.map(chapter => (
@@ -67,10 +66,3 @@ export const HomeScreen =  observer(() => {
         </ScrollView>
     );
 })
-
-const styles = StyleSheet.create({
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-});

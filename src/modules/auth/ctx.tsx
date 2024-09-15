@@ -5,6 +5,7 @@ import {observer} from "mobx-react-lite";
 import {AppService} from "@/src/modules/app/interface/services/app.service";
 import {useAppContext} from "@/src/modules/app/use-app-context";
 import {useColorScheme} from "react-native";
+import { SQLiteProvider } from 'expo-sqlite';
 
 const SessionContext = React.createContext<{
     token?: string | null;

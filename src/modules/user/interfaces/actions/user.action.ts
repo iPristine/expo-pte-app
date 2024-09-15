@@ -51,8 +51,8 @@ export class UserAction {
         this.userStore.favorates.setIsLoading(false)
     }
 
-    addToFavorates = async (chapterId: string) => {
-        const result = await addToFavoratesUseCase({chapterId})
+    addToFavorates = async (chapterId: string, name: string, description: string) => {
+        const result = await addToFavoratesUseCase({chapterId, name, description})
 
         if (result.isErr()) {
             this.userStore.favorates.setError(

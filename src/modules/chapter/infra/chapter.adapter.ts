@@ -4,6 +4,7 @@ import { Adapter } from "@/src/common/patterns/adapter"
 import {BASE_API_ENDPOINT} from "@/config"
 import {ChapterEntity} from "@/src/modules/chapter/infra/types/chapter.entity";
 import {SearchEntity} from "@/src/modules/chapter/infra/types/search.entity";
+import { getDatabase } from "@/src/common/Database";
 
 export class ChapterAdapter extends Adapter {
     private apiClient = ApiClient.getInstance()
@@ -26,35 +27,45 @@ export class ChapterAdapter extends Adapter {
     }
 
     async loadChapter(id: string): Promise<Result<ChapterEntity, Error>> {
-        const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity>(
-            `${BASE_API_ENDPOINT}/chapter/${id}`,
-            {
-                headers: { ...(await this.getAuthHeaders()) },
-            }
-        )
+        // const { ok, json, status } = await this.apiClient.secured.get<ChapterEntity>(
+        //     `${BASE_API_ENDPOINT}/chapter/${id}`,
+        //     {
+        //         headers: { ...(await this.getAuthHeaders()) },
+        //     }
+        // )
 
-        if (!ok || !json) {
-            return Err(new Error(`Chapter loading failed ${status}`))
+        // if (!ok || !json) {
+        //     return Err(new Error(`Chapter loading failed ${status}`))
+        // }
+
+        // const result = json
+
+        const db = await getDatabase();
+        const chapter = await db.getFirstAsync<ChapterEntity>(`SELECT * FROM chapter WHERE id = ${id}`, [id]);
+
+        if (!chapter) {
+            return Err(new Error(`Chapter loading failed`))
         }
 
-        const result = json
-
-        return Ok(result)
+        return Ok(chapter)
     }
 
     async searchChapters(search: string): Promise<Result<SearchEntity[], Error>> {
-        const { ok, json, status } = await this.apiClient.secured.get<SearchEntity[]>(
-            `${BASE_API_ENDPOINT}/search?query=${search}`,
-            {
-                headers: { ...(await this.getAuthHeaders()) },
-            }
-        )
+        // const { ok, json, status } = await this.apiClient.secured.get<SearchEntity[]>(
+        //     `${BASE_API_ENDPOINT}/search?query=${search}`,
+        //     {
+        //         headers: { ...(await this.getAuthHeaders()) },
+        //     }
+        // )
 
-        if (!ok || !json) {
-            return Err(new Error(`Chapters loading failed ${status}`))
-        }
+        // if (!ok || !json) {
+        //     return Err(new Error(`Chapters loading failed ${status}`))
+        // }
 
-        const result = json
+        // const result = json
+
+        const db = await getDatabase();
+        const result = await db.getAllAsync<SearchEntity>('SELECT id, name FROM chapter WHERE LOWER(content) LIKE LOWER(?);', [`%${search}%`]);
 
         return Ok(result)
     }
