@@ -7,6 +7,8 @@ import { UserMenuModal } from "@/src/modules/user/ui/user-menu-modal/user-menu-m
 import { useInitStores } from "@/src/modules/app/interface/init-store/use-init-stores";
 import { observer } from "mobx-react-lite";
 import { AppProvider } from "@/src/modules/app/app.provider";
+import { useEffect } from "react";
+import { getDatabase } from "@/src/common/Database";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -14,6 +16,10 @@ export {
 } from "expo-router";
 
 function RootLayout() {
+  useEffect(() => {
+    const db = getDatabase();
+  })
+
   const [isFontsLoaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,

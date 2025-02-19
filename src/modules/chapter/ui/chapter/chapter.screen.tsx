@@ -108,9 +108,11 @@ export const ChapterScreen = observer(() => {
                   document.addEventListener('selectionchange', function() {
                     setTimeout(checkSelection, 100);
                   });
-    ${chaptersStore.searchQuery?.data
-      ? `searchKeyword("${chaptersStore.searchQuery.data.trim()}");`
-      : ""
+    ${
+      chaptersStore.searchQuery?.data
+        ? `searchKeyword("${chaptersStore.searchQuery.data
+            .replaceAll("\n", " ").trim()}");`
+        : ""
     }
     true;`;
 
@@ -127,17 +129,25 @@ export const ChapterScreen = observer(() => {
         scalesPageToFit
         domStorageEnabled
         originWhitelist={["*"]}
-        injectedJavaScript={js}
+        injectedJavaScript={chapterId == "27" ? "" : js}
         javaScriptEnabled={true}
+        webviewDebuggingEnabled={true}
         ref={wvRef}
-        textZoom={200}
+        textZoom={chapterId=='27' ? 50 : 200}
         containerStyle={{ padding: 3, backgroundColor: background }}
-        source={{
-          html: chaptersStore.chapterDetails.data.content,
-        }}
+        source={
+          chapterId == "27"
+            ? { uri: "https://www.vuhin.ru/" }
+            : {
+                html: chaptersStore.chapterDetails.data.content,
+              }
+        }
       />
       {selectedText && (
-        <TouchableOpacity onPress={AddToFavoraties} style={{ position: "absolute", left: 10, bottom: 10 }}>
+        <TouchableOpacity
+          onPress={AddToFavoraties}
+          style={{ position: "absolute", left: 10, bottom: 10 }}
+        >
           <Avatar.Icon size={60} icon={starIconName} />
         </TouchableOpacity>
       )}

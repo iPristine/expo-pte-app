@@ -45,10 +45,10 @@ export const UserMenuModal = observer(()=>{
                         title={'Избранное'}
                     />
 
-                    <Menu.Item
+                    {/* <Menu.Item
                         onPress={handleSignOutClick}
                         title={'Выйти'}
-                    />
+                    /> */}
                 </Modal>
             </Portal>
         )

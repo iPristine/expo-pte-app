@@ -1,12 +1,24 @@
 import * as SQLite from 'expo-sqlite';
+import { Asset } from 'expo-asset';
+
+
+const id = require("@/assets/docs/docs.db");
 
 let db: null | SQLite.SQLiteDatabase = null;
 
-SQLite.importDatabaseFromAssetAsync('docs1.db', {assetId: require('@/assets/docs/docs.db')});
+const getDatabasePath = async () => {
+  // Получите путь к файлу базы данных из ассетов
+  const asset = Asset.fromModule(id);
+  await asset.downloadAsync();
 
-export const getDatabase = async () => {
+  await SQLite.importDatabaseFromAssetAsync('docs1.db', {forceOverwrite: true, assetId: id});
+  
+  return 'docs1.db';
+};
+
+export const getDatabase = async (): Promise<SQLite.SQLiteDatabase> => {
   if (!db) {
-    db = await SQLite.openDatabaseAsync('docs1.db');
+    db = await SQLite.openDatabaseAsync(await getDatabasePath());
   }
-  return db
-}
+  return db;
+};

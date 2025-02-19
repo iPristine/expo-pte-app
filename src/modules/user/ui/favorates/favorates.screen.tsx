@@ -27,7 +27,7 @@ export const FavoratesScreen =  observer(() => {
         return (
             <View style={{backgroundColor: background, flex: 1}}>
                 <Text onPress={userAction.loadFavorates}>Обновить</Text>
-                <Text>Error: {userStore.favorates.error}</Text>
+                <Text>{userStore.favorates.error}</Text>
             </View>
         );
     }

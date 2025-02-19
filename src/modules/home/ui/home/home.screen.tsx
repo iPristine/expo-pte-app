@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import {Text, useTheme} from 'react-native-paper';
 import {observer} from "mobx-react-lite";
 import {useSectionContext} from "@/src/modules/section/use-section-context";
@@ -10,7 +10,9 @@ import {SearchEntityCard} from "@/src/modules/chapter/ui/search-entity-card/sear
 export const HomeScreen =  observer(() => {
     const {sectionsStore, sectionsAction} = useSectionContext()
     const {chaptersStore} = useChapterContext()
-    const {colors: {background, onBackground}} = useTheme()
+    const {colors: {background, onBackground, primary}} = useTheme()
+
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         sectionsAction.loadSections()
@@ -22,20 +24,39 @@ export const HomeScreen =  observer(() => {
         }
     }, [sectionsStore.sectionDetailsId.data]);
 
-    if (sectionsStore.sectionDetails.isLoading || chaptersStore.searchEntities.isLoading) {
-        return (
-            <View style={{backgroundColor: background, flex: 1}}>
-                <Text>Загрузка...</Text>
-            </View>
-        );
+    useEffect(() => {
+        if (sectionsStore.sections.isLoading!==isLoading){
+            setLoading(sectionsStore.sections.isLoading)
+        }
+    }, [sectionsStore.sections.isLoading]);
+
+    if (sectionsStore.sectionDetails.isError) {
+      return (
+        <View style={{ backgroundColor: background, flex: 1 }}>
+          <Text onPress={sectionsAction.loadSections}>Обновить</Text>
+          <Text>{sectionsStore.sections.error}</Text>
+        </View>
+      );
     }
 
-    if(sectionsStore.sectionDetails.isError){
+    if (isLoading || chaptersStore.searchEntities.isLoading) {
         return (
-            <View style={{backgroundColor: background, flex: 1}}>
-                <Text onPress={sectionsAction.loadSections}>Обновить</Text>
-                <Text>Error: {sectionsStore.sections.error}</Text>
-            </View>
+            <View
+          style={[
+            {
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              backgroundColor: background,
+              flex: 1,
+              alignContent: "center",
+              justifyContent: "center",
+            },
+          ]}
+        >
+          <ActivityIndicator size={50} animating={true} color={primary} />
+        </View>
         );
     }
 

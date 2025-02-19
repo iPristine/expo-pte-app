@@ -27,8 +27,8 @@ export const FavorateAppendCard = observer(({ chapter }: Props) => {
         </View>
       </TouchableOpacity>
       {isOpen && (
-        ids.map((favorite) => (
-          <FavorateCard key={`favorate-card-${chapter.id}-${favorite}`} chapterId={chapter.id} chapter={chapter.favorites[favorite]} />
+        ids.map((favorite, index) => (
+          <FavorateCard key={`favorate-card-${chapter.id}-${favorite}`} chapterId={chapter.id} index={index} chapter={chapter.favorites[favorite]} />
         ))
       )}
     </>

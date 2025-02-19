@@ -65,8 +65,8 @@ export class UserAction {
         }
     }
 
-    removeFromFavorates = async (chapterId: string) => {
-        const result = await removeFromFavoratesUseCase({chapterId})
+    removeFromFavorates = async (chapterId: string, index: number) => {
+        const result = await removeFromFavoratesUseCase({chapterId, index})
 
         if (result.isErr()) {
             this.userStore.favorates.setError(
